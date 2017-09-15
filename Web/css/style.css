@@ -1,0 +1,137 @@
+html{
+	height: 100%;
+}
+body{
+	position: relative;
+	min-height: 100%;
+	background: url('../img/fond_jaune.png');
+}
+/* General */
+h1, h2, h3, h4{
+	font-family : "Times new roman", serif ;
+}
+h1{
+	font-size: 26px;
+	text-align: center;
+}
+h2{
+	font-size: 20px;
+}
+p{
+	font-family : Arial, sans-serif ;
+	font-size: 14px;
+}
+a:hover{
+	text-decoration: none;
+}
+.italic{
+	font-style: italic;
+	font-weight: bold;
+	color: #3B0100;
+}
+/* Header */
+header{
+	border-bottom: solid 1px #3B0100;
+	padding-bottom: 15px;
+}
+#logo{
+	margin-top: 15px;
+}
+#author{
+	padding: 15px 0 0 0;
+	text-align: center;
+}
+#nameAuthor{
+	display: inline-block;
+	font-size: 26px;
+	font-weight: bold;
+	vertical-align: bottom;
+	text-align: center;
+	margin: 0;
+}
+#photoAuthor{
+	display: inline-block;
+	vertical-align: bottom;
+	width: 15%;
+}
+/* Nav */
+nav{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+nav div{
+	width: 100%;
+}
+nav button{
+	font-family: arial, sans-serif;
+	background-color: #88870E;
+	color:white;
+}
+/* Section */
+section{
+	margin-bottom: 60px;
+}
+article{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+article a div{
+	margin-top: 15px;
+	margin-bottom: 15px;
+	padding: 0 10px 0 10px;   
+}
+article a div:hover{
+	box-shadow: 6px 6px 8px #3B0100;
+}
+article h2{
+ 	font-family: "Times new roman", serif ;
+ 	font-size: 22px;
+ 	font-weight: bold;
+ 	color: #7B0200;
+ 	margin : 5px 0 5px 0;
+ }
+article p{
+	font-family: "Times new roman", serif;
+	font-size: 16px;
+	color: black;
+	margin: 0;
+	padding: 0;
+}
+aside{
+	text-align: center;
+}
+@media (max-width: 767px){
+	aside{
+		border-top: solid 1px #3B0100;
+	}
+}
+aside h2{
+	
+}
+.book{
+	margin: 15px 0px 15px 0px;
+}
+.book p{
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+}
+/* Footer */
+footer{
+	display: flex;
+	justify-content: space-around;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	align-items: center;
+	height: 50px;
+	background-color: #3B0100;
+	margin: 0 -15px 0 -15px;
+}
+footer a{
+	color: white;
+	margin: auto;
+}
+footer a:hover{
+	color: #88870E;
+}

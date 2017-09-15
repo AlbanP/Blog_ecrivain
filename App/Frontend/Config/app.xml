@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<definitions>
+	<define var="title_home_page" value="Billet simple pour l'Alaska" ></define>
+	<define var="post_list_number_characters" value="300" ></define>
+</definitions>
