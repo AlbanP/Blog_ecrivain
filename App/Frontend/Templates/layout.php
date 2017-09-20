@@ -11,11 +11,11 @@
   </head>
   
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid"> 
       <?= $content ?>
       <footer>
-        <a href=" ">Mentions légales</a>
-        <a href=" ">Privé</a>
+        <a href="/mentionsLegales.html">Mentions légales</a>
+        <a href="/admin/">Privé</a>
       </footer>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>

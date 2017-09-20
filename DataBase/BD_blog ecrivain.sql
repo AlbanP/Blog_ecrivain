@@ -16,6 +16,7 @@ CREATE TABLE `comment` (
   `content` text NOT NULL,
   `date` datetime NOT NULL,
   `self_author` tinyint(1) NOT NULL,
-  `report` tinyint(1) NOT NULL, 
+  `report` tinyint(1) NOT NULL,
+  `reported` tinyint(1) NOT NULL, 
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 ;

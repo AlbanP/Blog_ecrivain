@@ -1,19 +1,20 @@
 /*$('.formComment').on('click', function(){
 	$('.formComment').after('<form>');
 });
-*/
+
 function loadComment(){
     setTimeout( function(){
-    	var postId =""
+    	var postId = $('#comments p:first').attr('id');
     	$.get(
-    		'../../App/Frontend/Modules/Blog/BlogController.php',
+    		'BlogController.php?app=Frontend&module=Blog&action=Show',
     		'false',
-    		Listcomment(),
+    		function(html){ $('comments').prepend(html);},
     		'html');
         loadComment();
     }, 5000);
 }
 loadComment();
+
 
 $("#submit").on(click, function(e){
     e.preventDefault();
@@ -25,11 +26,10 @@ $("#submit").on(click, function(e){
     		'../../App/Frontend/Modules/Blog/BlogController.php',
     		{
     		author : author,
-    		message : message 
+    		content : message 
     		},
     		loadComment(),
     		'text');
     };
-});
-
-charger();
+}); 
+*/

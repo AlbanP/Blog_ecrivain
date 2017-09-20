@@ -9,8 +9,8 @@ class Comment extends Entity{
             $author,
             $content,
             $date,
-            $selfAuthor, // boolean - true is self (Forteroche), false is not
-            $report; // boolean - true is check, false not
+            $report, // boolean - true is report, false not
+            $moderate; // boolean - true is moderate, false not
 
   const AUTHOR_INVALID = 1;
   const CONTENT_INVALID = 2;
@@ -39,11 +39,11 @@ class Comment extends Entity{
   public function setDate(\DateTime $date){
     $this->date = $date;
   }
-  public function setSelfAuthor($selfAuthor){
-    $this->selfAuthor = $selfAuthor;
-  }
   public function setReport($report){
     $this->report = $report;
+  }
+   public function setModerate($moderate){
+    $this->moderate = moderate;
   }
 
   public function postId(){
@@ -61,10 +61,10 @@ class Comment extends Entity{
   public function date(){
     return $this->date;
   }
-  public function selfAuthor(){
-    return $this->selfAuthor;
-  }
   public function report(){
     return $this->report;
+  }
+   public function moderate(){
+    return $this->moderate;
   }
 }

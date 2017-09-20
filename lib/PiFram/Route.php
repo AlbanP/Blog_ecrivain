@@ -51,6 +51,9 @@ class Route{
   public function module(){
     return $this->module;
   }
+  public function url(){
+    return $this->url;
+  }
   public function vars(){
     return $this->vars;
   }

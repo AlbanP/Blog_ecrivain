@@ -2,8 +2,10 @@
 <routes>
   <route url="/admin/" module="Blog" action="index" />
   <route url="/admin/post-insert\.html" module="Blog" action="insert" />
+  <route url="/admin/post-listOrder\.html" module="Blog" action="listOrder" />
   <route url="/admin/post-update-([0-9]+)\.html" module="Blog" action="update" vars="id" />
   <route url="/admin/post-delete-([0-9]+)\.html" module="Blog" action="delete" vars="id" />
-  <route url="/admin/comment-update-([0-9]+)\.html" module="Blog" action="updateComment" vars="id" />
+  <route url="/admin/post-posted-([0-9]+)\.html" module="Blog" action="posted" vars="id" />
+  <route url="/admin/comment-moderate-([0-9]+)\.html" module="Blog" action="moderateComment" vars="id" />
   <route url="/admin/comment-delete-([0-9]+)\.html" module="Blog" action="deleteComment" vars="id" />
 </routes>

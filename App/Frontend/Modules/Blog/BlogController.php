@@ -8,11 +8,9 @@ use \Entity\Comment;
 class BlogController extends BackController {
   
   public function executeIndex(HTTPRequest $request) {
-    $titlePage = $this->app->config()->get('title_home_page');
     $numberCharacters = $this->app->config()->get('post_list_number_characters');
-    $this->page->addVar('title', $titlePage);
-    $manager = $this->managers->getManagerOf('Post');
-    $listPost = $manager->getList("posted");
+    
+    $listPost = $this->managers->getManagerOf('Post')->getList('posted', 'orderPost');
     foreach ($listPost as $post) {
       if (strlen($post->content()) > $numberCharacters) {
         $start = substr($post->content(), 0, $numberCharacters);
@@ -20,31 +18,28 @@ class BlogController extends BackController {
         $post->setContent($start);
       }
     }
+    $this->page->addVar('title', 'Billet simple pour l\'Alaska');
     $this->page->addVar('listPost', $listPost);
   }
   public function executeShow(HTTPRequest $request) {
-    $manager = $this->managers->getManagerOf('Post');
-    $listPost = $manager->getList("posted");
-    $post = $manager->getUnique($request->getData('id'));
+    $post = $this->managers->getManagerOf('Post')->getUnique($request->getData('id'));
     if (empty($post)) {
       $this->app->httpResponse()->redirect404();
     }
-    $this->page->addVar('listPost', $listPost);
+    $this->page->addVar('listPost', $this->managers->getManagerOf('Post')->getList('posted', 'orderPost'));
     $this->page->addVar('title', $post->title());
     $this->page->addVar('post', $post);
-    $this->page->addVar('comment', $this->managers->getManagerOf('Comment')->getListOf($post->id()));
+    $this->page->addVar('listComment', $this->managers->getManagerOf('Comment')->getListOf($post->id()));
     
-    if( isset($_POST['pseudo']) && isset($_POST['commentaire']) ){      
-      session_start();
-    }
-    
+    $this->insertComment($request);
+  }
+  public function insertComment(HTTPRequest $request){
     if ($request->postExists('author')){
       $comment = new Comment([
         'postId' => $request->getData('id'),
         'parentCommentId' => Null,
         'author' => $request->postData('author'),
-        'content' => $request->postData('content'),
-        'selfAuthor' => 0,
+        'content' => $request->postData('content')
       ]);
        if ($comment->isValid()){
         $this->managers->getManagerOf('Comment')->save($comment);
@@ -56,22 +51,8 @@ class BlogController extends BackController {
       $this->page->addVar('comment', $comment);
     }
   }
-
-  public function insertComment(HTTPRequest $request){
-    if ($request->postExists('author')){
-      $comment = new Comment([
-        'post_id' => $request->getData('post'),
-        'author' => $request->postData('author'),
-        'content' => $request->postData('content')
-      ]);
-      if ($comment->isValid()){
-        $this->managers->getManagerOf('Comment')->save($comment);
-        $this->app->user()->setFlash('Le commentaire a bien été ajouté, merci !');
-        $this->app->httpResponse()->redirect('post-'.$request->getData('post').'.html');
-      } else {
-        $this->page->addVar('erreurs', $comment->erreurs());
-      }
-      $this->page->addVar('comment', $comment);
-    }
+  public function executeSimplePage(HTTPRequest $request){
+    $this->setView('mentionsLegales');
+    $this->page->addVar('title', 'Mentions légales');
   }
 }

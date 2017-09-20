@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <routes>
   <route url="/" module="Blog" action="index" />
-  <route url="/post-([0-9]+)\.html" module="Blog" action="show" vars="id"/>
+  <route url="/post-([0-9]+)\.html" module="Blog" action="show" vars="id" />
+  <route url="/mentionsLegales\.html" module="Blog" action="simplePage" />
 </routes>

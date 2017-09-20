@@ -17,11 +17,12 @@
 <section class="row">
 	<article class="col-xs-12">
 		<h2><?= $post['title'] ?></h2>
+		<span>Modifié le <?= $post['dateUpdate']->format('d/m/Y') ?></span>
 		<p><?= nl2br($post['content']) ?></p>
 	</article>
 </section>
 
-<section id="comment">
+<section>
 	<p class="italic">Vos commentaires</p>
 
 	<form action="" method="post">
@@ -31,33 +32,21 @@
     	
     	<?= isset($erreurs) && in_array(\Entity\Comment::CONTENT_INVALID, $erreurs) ? 'Le contenu est invalide.<br />' : '' ?>
     	<label>Contenu</label>
-    	<textarea name="content" rows="7" cols="50"><?= isset($commentFprm) ? htmlspecialchars($commentForm['content']) : '' ?></textarea><br />
+    	<textarea name="content" rows="7" cols="50"><?= isset($commentForm) ? htmlspecialchars($commentForm['content']) : '' ?></textarea><br />
     
-    	<input type="submit" value="Commenter" name="insertComment" />
+    	<input type="submit" value="Envoyer" name="insertComment" />
 	</form>
 
-	    <h2>Un formulaire de connexion en AJAX</h2>
-	    <form>
-	    <p>
-	        Pseudo : <input type="text" id="authorComment" name="authorComment" />
-	        Commentaire : <textarea id="messageComment" name="messageComment"></textarea>
-	        <input type="submit" id="submit" value="Envoyer" />
-	    </p>
-	    </form>
-	    <div id="Comments"></div>
-
-	 <?php if ($user->hasFlash()) echo '<p style="text-align: center;">', $user->getFlash(), '</p>'; ?>
-	<?php if (empty($comment)){ ?>
+	<?php if (empty($listComment)){ ?>
 		<p>Aucun commentaire n'a encore été posté. Soyez le premier à en laisser un !</p>
-	<?php 
-	}
-	foreach ($comment as $comment) { ?>
-  		<fieldset>
-    		<legend>
-      			Posté par <strong><?= htmlspecialchars($comment['author']) ?></strong> 
-    		</legend>
+	<?php } else {
+		foreach ($listComment as $comment) { ?>
+  		<div>
+    		<h3>Posté par <?= htmlspecialchars($comment['author']) ?></h3>
     		<p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
-  		</fieldset>
-		<?php
-		} ?>
+    		<a href="" title="responseComment">Répondre</a>
+    		<a href="" title="reportComment">Signaler</a>
+  		</div>
+		<?php } 
+	} ?>
 	</section>
