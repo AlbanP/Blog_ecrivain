@@ -29,15 +29,38 @@ class BlogController extends BackController {
     $this->page->addVar('listPost', $this->managers->getManagerOf('Post')->getList('posted', 'orderPost'));
     $this->page->addVar('title', $post->title());
     $this->page->addVar('post', $post);
-    $this->page->addVar('listComment', $this->managers->getManagerOf('Comment')->getListOf($post->id()));
     
-    $this->insertComment($request);
+    // $this->insertComment($request);
   }
+  public function executeListCommentAjax(HTTPRequest $request){
+    $this->page->setLayout("noLayout.php");
+    $this->page->addVar('listComment', $this->managers->getManagerOf('Comment')->getListOf($request->postData('id')));
+  }
+  public function executeInsertCommentAjax(HTTPRequest $request){
+    $this->page->setLayout("noLayout.php");
+    if ($request->postExists('author')){
+      $commentParentId = $request->postData('commentParentId');
+      if (empty($commentParentId)) $commentParentId = Null ; 
+      $comment = new Comment([
+        'postId' => $request->postData('postId'),
+        'parentCommentId' => $commentParentId ,
+        'author' => $request->postData('author'),
+        'content' => $request->postData('content')
+      ]);
+      if ($comment->isValid()){
+        $this->managers->getManagerOf('Comment')->save($comment);
+      }
+    }
+  }
+  public function executeReportCommentAjax(HTTPRequest $request){
+    
+  }
+
   public function insertComment(HTTPRequest $request){
     if ($request->postExists('author')){
       $comment = new Comment([
         'postId' => $request->getData('id'),
-        'parentCommentId' => Null,
+        'parentCommentId' => $request->getData('commentParentId'),
         'author' => $request->postData('author'),
         'content' => $request->postData('content')
       ]);
@@ -51,7 +74,7 @@ class BlogController extends BackController {
       $this->page->addVar('comment', $comment);
     }
   }
-  public function executeSimplePage(HTTPRequest $request){
+  public function executeSimplePage(){
     $this->setView('mentionsLegales');
     $this->page->addVar('title', 'Mentions légales');
   }

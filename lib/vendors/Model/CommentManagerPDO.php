@@ -12,8 +12,13 @@ class CommentManagerPDO extends CommentManager{
     	$q->bindValue(':post', $post, \PDO::PARAM_INT);
     	$q->execute();
     	$q->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Comment');
-    	$comments = $q->fetchAll();
-    	return $comments;
+        
+        $listComment = $q->fetchAll();
+        foreach ($listComment as $comment){
+            $comment->setDate(new \DateTime($comment->date()));
+        }
+        $q->closeCursor();  
+        return $listComment;
   	}
 	protected function add(Comment $comment){
     	$q = $this->dao->prepare('INSERT INTO comment SET postId = :postId, parentCommentId = :parentCommentId, author = :author, content = :content, date = NOW(), report = 0, moderate = 0 ');  

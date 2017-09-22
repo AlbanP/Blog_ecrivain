@@ -2,5 +2,8 @@
 <routes>
   <route url="/" module="Blog" action="index" />
   <route url="/post-([0-9]+)\.html" module="Blog" action="show" vars="id" />
+  <route url="/comment-listAjax\.html" module="Blog" action="listCommentAjax" vars="id" />
+  <route url="/comment-insertAjax\.html" module="Blog" action="insertCommentAjax" vars="postId, commentParentId, author, content" />
+  <route url="/comment-reportAjax\.html" module="Blog" action="reportCommentAjax" vars="id" />
   <route url="/mentionsLegales\.html" module="Blog" action="simplePage" />
 </routes>
