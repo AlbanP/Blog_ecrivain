@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <routes>
-  <route url="/admin/" module="Blog" action="index" />
-  <route url="/admin/post-insert\.html" module="Blog" action="insert" />
-  <route url="/admin/post-listOrder\.html" module="Blog" action="listOrder" />
-  <route url="/admin/post-update-([0-9]+)\.html" module="Blog" action="update" vars="id" />
-  <route url="/admin/post-delete-([0-9]+)\.html" module="Blog" action="delete" vars="id" />
-  <route url="/admin/post-posted-([0-9]+)\.html" module="Blog" action="posted" vars="id" />
-  <route url="/admin/comment-moderate-([0-9]+)\.html" module="Blog" action="moderateComment" vars="id" />
-  <route url="/admin/comment-delete-([0-9]+)\.html" module="Blog" action="deleteComment" vars="id" />
+  <route url="/admin/" module="Post" action="dashboard" />
+  <route url="/admin/post-add\.html" module="Post" action="add" />
+  <route url="/admin/post-listOrder\.html" module="Post" action="listOrder" />
+  <route url="/admin/post-update-([0-9]+)\.html" module="Post" action="update" vars="id" />
+  <route url="/admin/post-delete-([0-9]+)\.html" module="Post" action="delete" vars="id" />
+  <route url="/admin/post-posted-([0-9]+)\.html" module="Post" action="posted" vars="id" />
+  <route url="/admin/comment-moderate-([0-9]+)\.html" module="Comment" action="moderateComment" vars="id" />
+  <route url="/admin/comment-delete-([0-9]+)\.html" module="Comment" action="deleteComment" vars="id" />
+  <route url="/admin/user-deconnexion\.html" module="User" action="deconnexion" />
+  <route url="/admin/user-manage\.html" module="User" action="ManageUser" />
+  <route url="/admin/user-add\.html" module="User" action="add" />
+  <route url="/admin/user-update\.html" module="User" action="update"/>
+  <route url="/admin/user-delete\.html" module="User" action="delete"/>
 </routes>

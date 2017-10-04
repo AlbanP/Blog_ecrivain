@@ -9,13 +9,17 @@ class BackendApplication extends Application{
     $this->name = 'Backend';
   }
   public function run(){
-    if ($this->user->isAuthenticated()){
+    if ($this->session->isAuthenticated()){
       $controller = $this->getController();
     } else {
-      $controller = new Modules\Connexion\ConnexionController($this, 'Connexion', 'index');
+      $controller = new Modules\UserController($this, 'Connexion', 'index');
     }
     $controller->execute();
-    $this->httpResponse->setPage($controller->page());
-    $this->httpResponse->send();
+    if (!empty($controller->page())){
+      $this->httpResponse->setPage($controller->page());
+      $this->httpResponse->send();
+    } else {
+      exit;
+    }
   }
 }

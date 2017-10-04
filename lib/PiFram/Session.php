@@ -3,7 +3,7 @@ namespace PiFram;
  
 session_start();
  
-class User{
+class Session{
   
   public function getAttribute($attr){
     return isset($_SESSION[$attr]) ? $_SESSION[$attr] : null;
@@ -30,5 +30,9 @@ class User{
   }
   public function setFlash($value){
     $_SESSION['flash'] = $value;
+  }
+  public function quit(){
+    $_SESSION = array();
+    session_destroy();
   }
 }

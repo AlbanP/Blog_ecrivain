@@ -8,12 +8,14 @@ class FrontendApplication extends Application{
     parent::__construct();
     $this->name = 'Frontend';
   }
- 
   public function run(){
     $controller = $this->getController();
-    $controller->execute();
- 
-    $this->httpResponse->setPage($controller->page());
-    $this->httpResponse->send();
+    $controller->execute(); 
+    if (!empty($controller->page())){
+      $this->httpResponse->setPage($controller->page());
+      $this->httpResponse->send();
+    } else {
+      exit;
+    }
   }
 }

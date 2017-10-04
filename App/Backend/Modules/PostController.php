@@ -1,13 +1,14 @@
 <?php
-namespace App\Backend\Modules\Blog;
+namespace App\Backend\Modules;
 
 use \PiFram\BackController;
 use \PiFram\HTTPRequest;
 use \Entity\Post;
 
-class BlogController extends BackController{
-	public function executeIndex(HTTPRequest $request){
-    	$this->page->addVar('title', 'Tableau de bord');
+class PostController extends BackController{
+	public function executeDashboard(HTTPRequest $request){
+    	$this->newPage('dashboard');
+      $this->page->addVar('title', 'Tableau de bord');
     	$managerPost = $this->managers->getManagerOf('Post');
     	$managerComment = $this->managers->getManagerOf('Comment');
     	$this->page->addVar('listPost', $managerPost->getList('all', 'dateDesc'));
@@ -15,14 +16,16 @@ class BlogController extends BackController{
     	$this->page->addVar('numberCommentAll', $managerComment->countComment('all', 'all'));
     	$this->page->addVar('numberCommentReport', $managerComment->countComment('all', 'report'));
   	}
-  	public function executeInsert(HTTPRequest $request){
-    	if ($request->postExists('title')){
+  	public function executeAdd(HTTPRequest $request){
+    	$this->newPage('insert');
+      if ($request->postExists('title')){
       		$this->processForm($request);
     	}
     	$this->page->addVar('title', 'Ajout d\'un chapitre');
   	}
   	public function executeUpdate(HTTPRequest $request){
-    	if ($request->postExists('title')){
+    	$this->newPage('insert');
+      if ($request->postExists('title')){
       		$this->processForm($request);
     	} else {
       		$this->page->addVar('post', $this->managers->getManagerOf('Post')->getUnique($request->getData('id')));
@@ -44,12 +47,13 @@ class BlogController extends BackController{
     		$orderPosted = NULL ;
     	}
     	$this->managers->getManagerOf('Post')->posted($request->getData('id'), $orderPosted);
-    	$this->app->user()->setFlash('Le statut du chapitre a été modifié !');
+    	//$this->app->user()->setFlash('Le statut du chapitre a été modifié !');
     	$this->app->httpResponse()->redirect('.');
   	}
   	public function executeListOrder(HTTPRequest $request){
-  		if (!empty($request->postData('newListOrder'))){
-	  		$numberPosted = $this->managers->getManagerOf('Post')->countPost('posted');
+  		$this->newPage('listOrder');
+      if (!empty($request->postData('newListOrder'))){
+        $numberPosted = $this->managers->getManagerOf('Post')->countPost('posted');
 	  		for ($newOrder = 1; $newOrder <= $numberPosted; $newOrder++) { 
 	  			$id = $request->postData('Order' . $newOrder) ;
 	  			$this->managers->getManagerOf('Post')->posted((int)$id, (int)$newOrder);
@@ -83,25 +87,5 @@ class BlogController extends BackController{
       		$this->page->addVar('erreurs', $post->erreurs());
     	}
     	$this->page->addVar('post', $post);
-  	}
-  	public function executeModerateComment(HTTPRequest $request){
-    	$this->page->addVar('title', 'Moderation d\'un commentaire');
-        if ($request->postExists('author')){
-      		$comment = new Comment([
-        	'id' => $request->getData('id'),
-        	'author' => $request->postData('pseudo'),
-        	'content' => $request->postData('contenu')
-      		]);
-      		if ($comment->isValid()){
-        		$this->managers->getManagerOf('Comment')->save($comment);
-        		$this->app->user()->setFlash('Le commentaire a bien été modéré !');
-        		$this->app->httpResponse()->redirect('/post-'.$request->postData('post').'.html');
-      		} else {
-        		$this->page->addVar('erreurs', $comment->erreurs());
-      		}
-      		$this->page->addVar('comment', $comment);
-    	} else {
-      		$this->page->addVar('comment', $this->managers->getManagerOf('Comment')->get($request->getData('id')));
-    	}
   	}
 }

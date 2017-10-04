@@ -1,15 +1,15 @@
 <?php
-namespace App\Frontend\Modules\Blog;
+namespace App\Frontend\Modules;
 
 use \PiFram\BackController;
 use \PiFram\HTTPRequest;
 use \Entity\Comment;
 
-class BlogController extends BackController {
+class PostController extends BackController {
   
-  public function executeIndex(HTTPRequest $request) {
-    $numberCharacters = $this->app->config()->get('post_list_number_characters');
-    
+  public function executeIndex() {
+    $this->newPage('index');
+    $numberCharacters = $this->app->config()->get('post_list_number_characters'); 
     $listPost = $this->managers->getManagerOf('Post')->getList('posted', 'orderPost');
     foreach ($listPost as $post) {
       if (strlen($post->content()) > $numberCharacters) {
@@ -22,6 +22,7 @@ class BlogController extends BackController {
     $this->page->addVar('listPost', $listPost);
   }
   public function executeShow(HTTPRequest $request) {
+    $this->newPage('show');
     $post = $this->managers->getManagerOf('Post')->getUnique($request->getData('id'));
     if (empty($post)) {
       $this->app->httpResponse()->redirect404();
@@ -29,18 +30,16 @@ class BlogController extends BackController {
     $this->page->addVar('listPost', $this->managers->getManagerOf('Post')->getList('posted', 'orderPost'));
     $this->page->addVar('title', $post->title());
     $this->page->addVar('post', $post);
-    
-    // $this->insertComment($request);
   }
-  public function executeListCommentAjax(HTTPRequest $request){
-    $this->page->setLayout("noLayout.php");
-    $this->page->addVar('listComment', $this->managers->getManagerOf('Comment')->getListOf($request->postData('id')));
+  /*
+  public function executeShowComment(HTTPRequest $request){
+    $listComment = $this->managers->getManagerOf('Comment')->getListOf($request->postData('postId'));
+    echo json_encode($listComment);
+    //$this->app->httpResponse()->redirect404();
   }
-  public function executeInsertCommentAjax(HTTPRequest $request){
-    $this->page->setLayout("noLayout.php");
-    if ($request->postExists('author')){
+  public function executeAddComment(HTTPRequest $request){
+      if ($request->postExists('author')){
       $commentParentId = $request->postData('commentParentId');
-      if (empty($commentParentId)) $commentParentId = Null ; 
       $comment = new Comment([
         'postId' => $request->postData('postId'),
         'parentCommentId' => $commentParentId ,
@@ -52,8 +51,10 @@ class BlogController extends BackController {
       }
     }
   }
-  public function executeReportCommentAjax(HTTPRequest $request){
-    
+  public function executeReportComment(HTTPRequest $request){
+    $this->managers->getManagerOf('Comment')->report($request->getData('id'));
+    $this->app->user()->setFlash('Le commentaire a bien été signalé !');
+    //$this->app->httpResponse()->redirect('.');  
   }
 
   public function insertComment(HTTPRequest $request){
@@ -73,9 +74,6 @@ class BlogController extends BackController {
       }
       $this->page->addVar('comment', $comment);
     }
-  }
-  public function executeSimplePage(){
-    $this->setView('mentionsLegales');
-    $this->page->addVar('title', 'Mentions légales');
-  }
+  }*/
+
 }

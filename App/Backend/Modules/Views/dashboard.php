@@ -1,12 +1,14 @@
 <header class="row">
 	<img id="logo" class="col-xs-2" src="/img/logo.jpg" alt="Billet simple pour l'Alaska de Jean Forteroche">
 	<a href="/"><h1 class="col-xs-5" >Billet simple pour l'Alaska</h1></a>
-	<a href="/admin/post-insert.html" alt="Ajout chapitre">Ajouter un nouveau chapitre</a>
-	<a href="/admin/post-listOrder.html" alt="Classer les chapitres publiés">Classer les chapitres publiés</a>
-	<div class="col-xs-5 pull-right">
-		<p>Nombre de chapitre publié : <?= $numberPost ?></p>
-		<p>Nombre de commentaire : <?= $numberCommentAll?></p>
-		<p>Nombre de commentaire signalé : <?= $numberCommentReport ?></p>
+	<div class="col-xs-5">
+		<p>Nombre de chapitres publiés : <?= $numberPost ?></p>
+		<p>Nombre de commentaires : <?= $numberCommentAll?></p>
+		<p>Nombre de commentaires signalés : <?= $numberCommentReport ?></p>
+		<a class="btn btn-success" href="/admin/post-add.html" alt="Ajout chapitre">Ajouter un nouveau chapitre</a>
+		<a class="btn btn-primary" href="/admin/post-listOrder.html" alt="Classer les chapitres publiés">Classer les chapitres publiés</a>
+		<a class="btn btn-danger" href="/admin/user-deconnexion.html" alt="Deconnexion">Deconnexion</a>
+		<a class="btn btn-info" href="/admin/user-manage.html" alt="Gestion des utilisateurs">Gestion des utilisateurs</a>
 	</div>
 </header>
 <section class="row">
@@ -32,17 +34,11 @@
 		  				<a href="post-posted-<?= $post['id'] ?>.html">Publier</a>
 		  			<?php } else { $post['statusPost']='draft'; ?>
 		  				<a href="post-posted-<?= $post['id'] ?>.html">Ne plus publier</a>
-		  			<?php } ?>
+		  	<?php } ?>
 		  			<a href="post-delete-<?= $post['id'] ?>.html">Supprimer</a>
 		  			<p>Dernier enregistrement le <?= $post['dateUpdate']->format('d/m/Y à H\hi') ?></p>
 		  		</div></a>
 
-		  		<?php foreach ($listComment as $comment) { ?>
-					<div>
-						<h3>Posté par <?= htmlspecialchars($comment['author']) ?></h3>
-						<p><?= nl2br(htmlspecialchars($comment['content'])) ?></p>
-					</div>
-				<?php } ?>
 		   	<?php } ?>
 		   	</div>
 		</article>

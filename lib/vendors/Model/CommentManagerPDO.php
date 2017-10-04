@@ -4,20 +4,16 @@ namespace Model;
 use \Entity\Comment;
 
 class CommentManagerPDO extends CommentManager{
-	public function getListOf($post){
-    	if (!ctype_digit($post)){
+	public function getListOf($postId, $lastId){
+    	if (!ctype_digit($postId)){
       		throw new \InvalidArgumentException('L\'identifiant du chapitre passé doit être un nombre entier valide');
     	}
-    	$q = $this->dao->prepare('SELECT id, postId, parentCommentId, author, content, date, report, moderate  FROM comment WHERE postId = :post');
-    	$q->bindValue(':post', $post, \PDO::PARAM_INT);
+    	$q = $this->dao->prepare('SELECT id, postId, parentCommentId, author, content, date, report, moderate  FROM comment WHERE postId = :postId AND id > :lastId');
+    	$q->bindValue(':postId', $postId, \PDO::PARAM_INT);
+        $q->bindValue(':lastId', $lastId, \PDO::PARAM_INT);
     	$q->execute();
-    	$q->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Comment');
-        
-        $listComment = $q->fetchAll();
-        foreach ($listComment as $comment){
-            $comment->setDate(new \DateTime($comment->date()));
-        }
-        $q->closeCursor();  
+        $listComment = $q->fetchAll(\PDO::FETCH_ASSOC);
+        $q->closeCursor(); 
         return $listComment;
   	}
 	protected function add(Comment $comment){
@@ -33,7 +29,7 @@ class CommentManagerPDO extends CommentManager{
         $sql = 'SELECT COUNT(*) FROM comment WHERE moderate = 0';
         if ($postId == '$postId'){
             $sql .= ' AND postId = : postId';
-            $sql->bindValue(':postId', $comment->postId(), \PDO::PARAM_INT);
+            $sql->bindValue(':postId', $postId(), \PDO::PARAM_INT);
         } elseif ($postId == 'all') {
             // no WHERE
         }
@@ -48,5 +44,10 @@ class CommentManagerPDO extends CommentManager{
                 // no WHERE 
         }
     return $this->dao->query($sql)->fetchColumn();
+    }
+    public function report($id){
+        $sql = $this->dao->prepare('UPDATE comment SET report = 1 WHERE id = :id');
+        $sql->bindValue(':id', $id , \PDO::PARAM_INT );
+        $sql->execute();;
     }
 }
