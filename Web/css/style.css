@@ -24,47 +24,133 @@ p{
 a:hover{
 	text-decoration: none;
 }
+.titlePage{
+	font-family : "Times new roman", serif;
+	font-size: 22px;
+ 	font-weight: bold;
+ 	color: white;
+ 	margin-left : 15px; 
+}
+.titlePost{
+	font-family : "Times new roman", serif;
+	font-size: 22px;
+ 	font-weight: bold;
+ 	color: #7B0200;
+ 	margin : 5px 0 5px 0;
+}
+.authorComment{
+	font-family : "Times new roman", serif;
+	font-size: 20px;
+ 	font-weight: bold;
+ 	color: #7B0200;
+ 	margin : 5px 0 5px 0;
+}
+.dateItem{
+	font-family : arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #3B0100;
+}
+.textAnnotation{
+	font-family : "Times new roman", serif;
+	font-size: 14px;
+	font-style: italic;
+	font-weight: bold;
+	color: #3B0100;
+}
 .italic{
 	font-style: italic;
 	font-weight: bold;
 	color: #3B0100;
 }
 
+/* Tooltip */
+.tooltip-inner {
+  background-color: #3B0100 !important;
+}
+.tooltip.top .tooltip-arrow {
+      border-top-color: #3B0100;
+}
 
+/* Table */
 table {
   border-collapse: collapse;
 }
-
 td, th {
-	background: #fff;
-  border-width: 0;
+	background: url('../img/fond_jaune.png');
+	color: #3B0100;
+  	border-width: 0;
 	border-bottom: 1px solid #B8B8B8;
 	font-weight: normal !important;
-  padding: 15px;
+  	padding: 15px;
 	text-align: left;
 	vertical-align: middle;
 }
-
-tr.even {
-  td, th {
-    background: #f1f1f1;
-  }
-}
-
 thead, tfoot {
-  text-transform: uppercase;
-  
-  th {
-    background: #ccc;
-  }
+  text-transform: uppercase; 
+}
+/* Margin */
+.margTop5{
+	margin-top: 15px;
+}
+.margLeft15{
+	margin-left: 15px;
+}
+.margRight15{
+	margin-right: 15px;
+}
+.margTop15{
+	margin-top: 15px;
+}
+.margBot15{
+	margin-bottom: 15px;
 }
 
+/* border */
+.borderAll{
+	box-shadow: 6px 6px 8px #3B0100;
+}
+.borderTop{
+	border-top: 1px solid #3B0100;
+}
+.borderBot{
+	border-bottom: 1px solid #3B0100;
+}
+
+/* Button, link */
+.btnPosts{
+	font-family: arial, sans-serif;
+	background-color: #88870E;
+	color:white;
+}
+.btnComments{
+	font-family: arial, sans-serif;
+	background-color: #AE4111;
+	color:white;
+}
+.btnValid{
+	font-family: arial, sans-serif;
+	background-color: #0A79C7;
+	color:white;
+}
+.menuList{
+	background: url('../img/fond_jaune.png');
+	border: 1px solid #3B0100;
+}
+
+.modal-content{
+	background: url('../img/fond_jaune.png');
+	border-color: #3B0100;
+}
 
 
 /* Header */
 header{
-	border-bottom: solid 1px #3B0100;
-	padding-bottom: 15px;
+
+}
+.navBar{
+	background-color: #3B0100;
+	padding: 10px 15px 10px 15px ; 
 }
 #logo{
 	margin-top: 15px;
@@ -87,18 +173,9 @@ header{
 	width: 15%;
 }
 /* Nav */
-nav{
-	margin-top: 15px;
-	margin-bottom: 15px;
-}
-nav div{
-	width: 100%;
-}
-nav button{
-	font-family: arial, sans-serif;
-	background-color: #88870E;
-	color:white;
-}
+
+
+
 /* Section */
 section{
 	margin-bottom: 60px;
@@ -129,17 +206,10 @@ article p{
 	margin: 0;
 	padding: 0;
 }
-aside{
+.textCenter{
 	text-align: center;
 }
-@media (max-width: 767px){
-	aside{
-		border-top: solid 1px #3B0100;
-	}
-}
-aside h2{
-	
-}
+
 .book{
 	margin: 15px 0px 15px 0px;
 }

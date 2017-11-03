@@ -13,12 +13,12 @@ class CommentAjaxController extends BackController {
     $listComment = $this->managers->getManagerOf('Comment')->getListOf($postId, $lastId);
     echo json_encode($listComment);
   }
+  
   public function executeAddComment(HTTPRequest $request){
     if ($request->postExists('author')){
-      $commentParentId = $request->postData('commentParentId');
       $comment = new Comment([
         'postId' => $request->postData('postId'),
-        'parentCommentId' => $commentParentId ,
+        'parentId' => $request->postData('parentId'),
         'author' => $request->postData('author'),
         'content' => $request->postData('content')
       ]);
@@ -27,8 +27,9 @@ class CommentAjaxController extends BackController {
       }
     }
   }
+  
   public function executeReportComment(HTTPRequest $request){
     $this->managers->getManagerOf('Comment')->report($request->postData('id'));
-    $this->app->user()->setFlash('Le commentaire a bien été signalé !');
+    $this->app->session()->setFlash('Le commentaire a bien été signalé !');
   }
 }

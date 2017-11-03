@@ -14,8 +14,10 @@ class Config extends ApplicationComponent{
       }
     }
     if (isset($this->vars[$var])){
+      
       return $this->vars[$var];
     }
+    
     return null;
   }
 }

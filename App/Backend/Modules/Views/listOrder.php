@@ -1,10 +1,9 @@
-  <img id="logo" class="col-xs-2" src="/img/logo.jpg" alt="Billet simple pour l'Alaska de Jean Forteroche">
-  <a href="/admin/"><h1 class="col-xs-5" >Billet simple pour l'Alaska</h1></a>
 
-<h2 class="col-xs-12">Ordre des chapitres publiés</h2>
-<p class="col-xs-12">Déplacer les chapitres dans l'ordre souhaité</p>
-<p>Nombre de chapitre publié : <?= $numberPost ?></p>
-<form class="col-xs-12" action="" method="post">
+<div class="margTop15">
+  <h2>Ordre des chapitres publiés</h2>
+  <p>Déplacer les chapitres dans l'ordre souhaité</p>
+</div>
+<form class="margTop15" action="" method="post">
   <table>
       <thead>
         <tr class="ui-state-default row">
@@ -22,5 +21,5 @@
       <?php } ?>  
       </tbody>
   </table>
-  <input type="submit"  name="newListOrder"  value="Enregistrer l'ordre de publication"> 
+  <input type="submit"  name="newListOrder"  value="Enregistrer l'ordre de publication" class="btn btn-primary margTop15"> 
 </form>

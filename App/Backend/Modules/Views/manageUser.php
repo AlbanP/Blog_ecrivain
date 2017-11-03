@@ -1,12 +1,7 @@
-<header class="row">
-	<img id="logo" class="col-xs-2" src="/img/logo.jpg" alt="Billet simple pour l'Alaska de Jean Forteroche">
-	<a href="/admin/"><h1 class="col-xs-6" >Billet simple pour l'Alaska</h1></a>
-	<div class="col-xs-4">
-		<p>Nombre d'utilisateurs : <?= $numberUser ?></p>
-		<a class="btn btn-danger" href="/admin/user-deconnexion.html">Deconnexion</a>
-	</div>
-</header>
-<section class="row">	
+
+<section class="row">
+<div class="col-xs-12">
+	
 	<table class="col-xs-12">
 		<tr>
 			<th>Nom</th>
@@ -79,6 +74,7 @@
 	  	</tr>
 	   	<?php } ?>
 	</table>
+</div>
 </section>
 		<div id="UserAdd">
         	<button data-toggle="modal" data-backdrop="false" href="#formAdd" class="btn btn-primary">Ajouter un nouvel utilisateur</button>

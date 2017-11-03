@@ -15,6 +15,7 @@ abstract class Application{
     $this->config = new Config($this);
     $this->name = '';
   }
+
   public function getController(){
     $router = new Router;
     $xml = new \DOMDocument;
@@ -39,23 +40,34 @@ abstract class Application{
     $_GET = array_merge($_GET, $matchedRoute->vars());
 
     $controllerClass = 'App\\'.$this->name.'\\Modules\\'.$matchedRoute->module().'Controller';
+    
     return new $controllerClass($this, $matchedRoute->module(), $matchedRoute->action());
   }
+
   abstract public function run();
 
   public function httpRequest(){
+    
     return $this->httpRequest;
   }
+
   public function httpResponse(){
+    
     return $this->httpResponse;
   }
+
   public function name(){
+    
     return $this->name;
   }
+
   public function config(){
+    
     return $this->config;
   }
+
   public function session(){
+    
     return $this->session;
   }
 }

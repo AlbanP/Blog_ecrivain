@@ -6,8 +6,9 @@
   <route url="/admin/post-update-([0-9]+)\.html" module="Post" action="update" vars="id" />
   <route url="/admin/post-delete-([0-9]+)\.html" module="Post" action="delete" vars="id" />
   <route url="/admin/post-posted-([0-9]+)\.html" module="Post" action="posted" vars="id" />
-  <route url="/admin/comment-moderate-([0-9]+)\.html" module="Comment" action="moderateComment" vars="id" />
-  <route url="/admin/comment-delete-([0-9]+)\.html" module="Comment" action="deleteComment" vars="id" />
+  <route url="/admin/comment-moderate\.html" module="CommentAjax" action="moderate" />
+  <route url="/admin/comment-unreport\.html" module="CommentAjax" action="unreport" />
+  <route url="/admin/comment-delete\.html" module="CommentAjax" action="delete" />
   <route url="/admin/user-deconnexion\.html" module="User" action="deconnexion" />
   <route url="/admin/user-manage\.html" module="User" action="ManageUser" />
   <route url="/admin/user-add\.html" module="User" action="add" />

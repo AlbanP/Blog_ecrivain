@@ -12,6 +12,7 @@ abstract class UserManager extends Manager{
   abstract protected function modify(User $user);
   abstract public function delete($id);
   abstract public function userPass($id);
+  
   public function save(User $user){
     if ($user->isValid()){
        $user->isNew() ? $this->add($user) : $this->modify($user);

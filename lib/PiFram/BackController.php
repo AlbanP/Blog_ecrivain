@@ -25,13 +25,17 @@ abstract class BackController extends ApplicationComponent{
     }
     $this->$method($this->app->httpRequest());
   }
+
   public function newPage($view){
     $this->page = new Page($this->app());
     $this->setView($view);
   }
+
   public function page(){
+    
     return $this->page;
   }
+
   public function setModule($module){
     if (!is_string($module) || empty($module))
     {
@@ -39,12 +43,14 @@ abstract class BackController extends ApplicationComponent{
     }
     $this->module = $module;
   }
+
   public function setAction($action){
     if (!is_string($action) || empty($action)){
       throw new \InvalidArgumentException('L\'action doit être une chaine de caractères valide');
     }
     $this->action = $action;
   }
+
   public function setView($view){
     if (!is_string($view) || empty($view)){
       throw new \InvalidArgumentException('La vue doit être une chaine de caractères valide');

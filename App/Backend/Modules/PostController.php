@@ -15,14 +15,17 @@ class PostController extends BackController{
     	$this->page->addVar('numberPost', $managerPost->countPost('posted'));
     	$this->page->addVar('numberCommentAll', $managerComment->countComment('all', 'all'));
     	$this->page->addVar('numberCommentReport', $managerComment->countComment('all', 'report'));
+      $this->page->addVar('commentReported', $managerComment->getReported());
   	}
+
   	public function executeAdd(HTTPRequest $request){
     	$this->newPage('insert');
       if ($request->postExists('title')){
       		$this->processForm($request);
     	}
-    	$this->page->addVar('title', 'Ajout d\'un chapitre');
+    	$this->page->addVar('title', "Ajout d'un chapitre");
   	}
+
   	public function executeUpdate(HTTPRequest $request){
     	$this->newPage('insert');
       if ($request->postExists('title')){
@@ -30,13 +33,14 @@ class PostController extends BackController{
     	} else {
       		$this->page->addVar('post', $this->managers->getManagerOf('Post')->getUnique($request->getData('id')));
     	}
-    	$this->page->addVar('title', 'Modification d\'un chapitre');
+    	$this->page->addVar('title', "Modification d'un chapitre");
   	}
+
   	public function executeDelete(HTTPRequest $request){
     	$this->managers->getManagerOf('Post')->delete($request->getData('id'));
-    	$this->app->user()->setFlash('Le chapitre a bien été supprimée !');
     	$this->app->httpResponse()->redirect('.');
   	}
+
   	public function executePosted(HTTPRequest $request){
     	$post = $this->managers->getManagerOf('Post')->getUnique($request->getData('id'));
     	$orderPosted = $post['orderPosted'];
@@ -47,23 +51,26 @@ class PostController extends BackController{
     		$orderPosted = NULL ;
     	}
     	$this->managers->getManagerOf('Post')->posted($request->getData('id'), $orderPosted);
-    	//$this->app->user()->setFlash('Le statut du chapitre a été modifié !');
+    	//$this->app->session()->setFlash('Le statut du chapitre a été modifié !');
     	$this->app->httpResponse()->redirect('.');
   	}
+
   	public function executeListOrder(HTTPRequest $request){
   		$this->newPage('listOrder');
+      $this->page->addVar('title', 'Classement');
       if (!empty($request->postData('newListOrder'))){
         $numberPosted = $this->managers->getManagerOf('Post')->countPost('posted');
 	  		for ($newOrder = 1; $newOrder <= $numberPosted; $newOrder++) { 
 	  			$id = $request->postData('Order' . $newOrder) ;
 	  			$this->managers->getManagerOf('Post')->posted((int)$id, (int)$newOrder);
 	  		}
-	  		$this->app->user()->setFlash('L\'ordre des chapitre a été modifié !');
+	  		//$this->app->session()->setFlash('L\'ordre des chapitre a été modifié !');
   		}
     		$managerPost = $this->managers->getManagerOf('Post');
     		$this->page->addVar('numberPost', $managerPost->countPost('posted'));
   			$this->page->addVar('listPost', $managerPost->getList('posted', 'orderPost'));
   	}
+
   	public function processForm(HTTPRequest $request){
     	$orderPosted = $request->postData('typeSave') ;
     	if ($orderPosted == "Publier") {
@@ -81,8 +88,8 @@ class PostController extends BackController{
       		$post->setId($request->postData('id'));
     	}
     	if ($post->isValid()){
-      		$this->managers->getManagerOf('Post')->save($post);
-      		$this->app->user()->setFlash($post->isNew() ? 'Le chapitre a bien été ajoutée !' : 'Le chapitre a bien été modifiée !');
+          $this->managers->getManagerOf('Post')->save($post);
+          $this->app->httpResponse()->redirect('/admin/');
     	} else {
       		$this->page->addVar('erreurs', $post->erreurs());
     	}

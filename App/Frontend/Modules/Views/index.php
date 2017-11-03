@@ -8,24 +8,23 @@
 		<img id="photoAuthor" src="/img/photoAuthor.jpg" alt="Photo de Jean Forteroche">
 	</div>
 </header>
-<section class="row">
-	<div class="col-xs-12 col-sm-7">		
-		<nav>
-			<div class="btn-group"> 
-				<button class="btn btn-lg dropdown-toggle" data-toggle="dropdown"> Acceder aux différents chapitres  <span class="caret"></span></button>
-				<ul class="dropdown-menu">
-					<?php foreach ($listPost as $post){ ?>
-						<li><a href="post-<?= $post['id'] ?>.html"><?= $post['title'] ?></a></li>
-				 	<?php } ?>	
-				</ul>
-			</div>
-		</nav>	
+<nav class="row margTop15">
+	<div class="navBar">
+		<div class="btn-group"> 
+			<button class="btn dropdown-toggle btnPosts" data-toggle="dropdown">Acceder aux différents chapitres  <span class="caret"></span></button>
+			<?php include '_menuPosts.php' ?> 
+		</div>
+		<?php include __DIR__.'/../../../Backend/Modules/Views/_menuUser.php' ?>		
+	</div>
+</nav>
+<section class="row">		
+	<div class="col-xs-12 col-sm-7">	
 		<article>
 			<div>
 			<?php foreach ($listPost as $post) { ?>
 		  		<a href="post-<?= $post['id'] ?>.html"><div>
 		  			<h2><?= $post['title'] ?></h2>
-		  			<span>Modifié le <?= $post['dateUpdate']->format('d/m/Y') ?></span>
+		  			<span class="dateItem">Modifié le <?= $post['dateUpdate']->format('d/m/Y') ?></span>
 		  			<p><?= nl2br($post['content']) ?></p>
 		  			<p class="italic">Lire le chapitre ou voir ou écrire un commentaire</p>
 		  		</div></a>
@@ -33,7 +32,7 @@
 		   	</div>
 		</article>
 	</div>	
-	<aside class="col-xs-12 col-sm-5 pull-right">
+	<aside class="col-xs-12 col-sm-5 pull-right textCenter">
 		<h2>Mes livres coup de coeur</h2>
 		<div class="book col-xs-6 col-sm-12">
 			<img src="img/CoupCoeur1.jpg" alt="La pape des escargots - Henri Vincenot">

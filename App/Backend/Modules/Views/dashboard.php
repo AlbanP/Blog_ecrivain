@@ -1,45 +1,42 @@
-<header class="row">
-	<img id="logo" class="col-xs-2" src="/img/logo.jpg" alt="Billet simple pour l'Alaska de Jean Forteroche">
-	<a href="/"><h1 class="col-xs-5" >Billet simple pour l'Alaska</h1></a>
-	<div class="col-xs-5">
-		<p>Nombre de chapitres publiés : <?= $numberPost ?></p>
-		<p>Nombre de commentaires : <?= $numberCommentAll?></p>
-		<p>Nombre de commentaires signalés : <?= $numberCommentReport ?></p>
-		<a class="btn btn-success" href="/admin/post-add.html" alt="Ajout chapitre">Ajouter un nouveau chapitre</a>
-		<a class="btn btn-primary" href="/admin/post-listOrder.html" alt="Classer les chapitres publiés">Classer les chapitres publiés</a>
-		<a class="btn btn-danger" href="/admin/user-deconnexion.html" alt="Deconnexion">Deconnexion</a>
-		<a class="btn btn-info" href="/admin/user-manage.html" alt="Gestion des utilisateurs">Gestion des utilisateurs</a>
-	</div>
-</header>
-<section class="row">
-	<div class="col-xs-12 col-sm-7">		
-		<nav>
-			<div class="btn-group"> 
-				<button class="btn btn-lg dropdown-toggle" data-toggle="dropdown"> Acceder aux différents chapitres  <span class="caret"></span></button>
-				<ul class="dropdown-menu">
-					<?php foreach ($listPost as $post){ ?>
-						<li><a href="post-update-<?= $post['id'] ?>.html"><?= $post['title'] ?></a></li>
-				 	<?php } ?>	
-				</ul>
-			</div>
-		</nav>	
-		<article>
-			<div>
+<section class="row">	
+	<article class="col-xs-12 col-sm-7">
+		<span class="titlePost">Liste des chapitres : </span>
+		<p>Nombre de chapitres publiés : <span class="badge"><?= $numberPost ?></span></p>
+		<p>Nombre total de commentaires : <span class="badge"><?= $numberCommentAll?></span></p>
+		<p>Nombre total de commentaires signalés : <span class="badge"><?= $numberCommentReport ?></span></p>
+		<div class="margTop15">
 			<?php foreach ($listPost as $post) { ?>
-		  		<a href="post-update-<?= $post['id'] ?>.html"><div>
-		  			<h2><?= $post['title'] ?></h2>
-		  			<p><?php if (is_null($post['orderPosted'])) { echo "Brouillon"; } else { echo "Publié"; } ?></p>
-		  			<a href= "post-update-<?= $post['id'] ?>.html">Modifier</a>
-		  			<?php if (is_null($post['orderPosted'])) { $post['statusPost']='post'; ?>
-		  				<a href="post-posted-<?= $post['id'] ?>.html">Publier</a>
-		  			<?php } else { $post['statusPost']='draft'; ?>
-		  				<a href="post-posted-<?= $post['id'] ?>.html">Ne plus publier</a>
-		  	<?php } ?>
-		  			<a href="post-delete-<?= $post['id'] ?>.html">Supprimer</a>
-		  			<p>Dernier enregistrement le <?= $post['dateUpdate']->format('d/m/Y à H\hi') ?></p>
-		  		</div></a>
-
-		   	<?php } ?>
-		   	</div>
-		</article>
-	</div>
+	  		<div class="borderBot">
+  				<span class="titlePost"><?= $post['title'] ?></span>
+  				<?php if (is_null($post['orderPosted'])) { echo '<span class="label label-info">Brouillon</span>'; } else { echo '<span class="label label-success">Publié</span>'; } ?>
+  				<a href= "post-update-<?= $post['id'] ?>.html" class="text-primary margLeft15" data-toggle="tooltip" title="Modifier"><span class="glyphicon glyphicon-edit"></span></a>
+  				<?php if (is_null($post['orderPosted'])) { $post['statusPost']='post'; ?>
+  					<a href="post-posted-<?= $post['id'] ?>.html" class="text-success margLeft15" data-toggle="tooltip" title="Publier"><span class="glyphicon glyphicon-share"></span></a>
+  				<?php } else { $post['statusPost']='draft'; ?>
+  					<a href="post-posted-<?= $post['id'] ?>.html" class="text-muted margLeft15" data-toggle="tooltip" title="Ne plus publier"><span class="glyphicon glyphicon-inbox"></span></a>
+  				<?php } ?>
+  				<a actionHref="/admin/post-delete-<?= $post['id'] ?>.html" class="text-danger margLeft15" data-confirm="Supression du chapitre et des commentaires qui sont associés. Valider pour confirmer." idItem="<?= $post['id'] ?>" nameId="<?= $post['title'] ?>" titleModal="Suppresion du chapitre " data-toggle="tooltip" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>
+  				<a href="/post-<?= $post['id'] ?>.html#listComment" class="text-warning margLeft15" data-toggle="tooltip" title="Voir les commentaires"><span class="glyphicon glyphicon-share-alt"></span></a>
+  				<div class="dateItem">Dernier enregistrement le <?= $post['dateUpdate']->format('d/m/Y à H\hi') ?></div>	
+	   		</div>
+	   		<?php } ?>
+	   	</div>
+	</article>
+	<aside class="col-xs-12 col-sm-5 margTop15">
+		<span class="titlePost">Commentaires signalés :</span>
+		<div>
+			<?php foreach ($commentReported as $comment) { ?>
+			<div id="<?= $comment['id'] ?>" class="borderBot">
+				<span class="authorComment"><?= $comment['author'] ?></span>
+				<a class="commentModerate text-danger margLeft15" idItem="<?= $comment['id'] ?>" data-toggle="tooltip" title="Modérer"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+				<a class="commentUnreport text-success margLeft15" idItem="<?= $comment['id'] ?>" data-toggle="tooltip" title="Accepter"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+				<a href= "/post-<?= $comment['postId']?>.html#<?= $comment['id']?>" class="text-warning margLeft15" data-toggle="tooltip" title="Voir les commentaires"><span class="glyphicon glyphicon-share-alt"></span></a>
+				<div class="dateItem"><?= $comment['date']->format('d/m/Y à H\hi') ?></div>
+				<div><?= $comment['content'] ?></div>
+			</div>
+			<?php } ?>
+			<p>Pas de commentaire signalé</p>
+		</div>
+	</aside>
+</section>
+<script src="/js/manageComments.js"></script>
