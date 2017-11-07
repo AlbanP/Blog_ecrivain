@@ -57,10 +57,13 @@ function showComment(comment){
         if (comment[i]["report"] == 1 && comment[i]["moderate"] == 0) {
             commentArticle += '<span class="label label-info margRight15">Message signalé </span>';
         } else if(session == null) {
+            commentArticle += '<div>'
             commentArticle += '<a type="button" class="commentAdd btn btn-xs btnComments" style="margin-right: 5px"> Répondre </a>';
             commentArticle += '<a type="button" class="btn btn-xs btn-warning" data-confirm="Si vous considérez que ce message est inapproprié, validez pour nous en avertir." action="commentReport" idItem="' + comment[i]["id"] + '" nameId="' + comment[i]["author"] + '" titleModal="Signalement du message de"  > Signaler </a>';
+            commentArticle += '</div>'
         }
         if (session != null){
+            commentArticle += '<div class="iconMenu">'
             if (comment[i]["moderate"] == 0) {
                 commentArticle += '<a class="commentAdd text-warning" data-toggle="tooltip" title="Répondre"><span class="glyphicon glyphicon-pencil"></span></a>';
                 commentArticle += '<a class="commentModerate text-danger margLeft15" data-toggle="tooltip" title="Modérer"><span class="glyphicon glyphicon-thumbs-down"></span></a>';
@@ -68,7 +71,8 @@ function showComment(comment){
                     commentArticle += '<a class="commentUnreport text-success margLeft15" data-toggle="tooltip" title="Accepter"><span class="glyphicon glyphicon-thumbs-up"></span></a>';
                 }
             }
-            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." action="commentDelete" idItem="' + comment[i]["id"] + '" nameId="' + comment[i]["author"] + '" titleModal="Supression du (et des) commentaire(s) de" data-toggle="tooltip" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>';      
+            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." data-action="commentDelete" data-idItem="' + comment[i]["id"] + '" data-nameId="' + comment[i]["author"] + '" data-titleModal="Supression du (et des) commentaire(s) de" data-toggle="tooltip" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>';      
+            commentArticle += '</div>'
         }
         commentArticle += '</div></div></div>';    
         
@@ -78,7 +82,7 @@ function showComment(comment){
 };
 var timerLoadComment;
 function reloadComment(){
-	timerLoadComment = setTimeout('loadComment()', 5000);
+	timerLoadComment = setTimeout(loadComment, 5000);
 }
 function stopReloadComment(){
 	clearTimeout(timerLoadComment);
@@ -93,11 +97,14 @@ $("#listComment").on('click', ".commentAdd",function(e){
     e.preventDefault();
     stopReloadComment();
     $(".commentAdd").show();
-    var parentId = $(this).parent().attr('id');
-    $('#formComment').attr('parentId', parentId);
-    $(this).parent().after($('#formComment'));
+    var parentId = $(this).parent().parent().attr('id');
+    console.log(parentId);
+    $('#formComment').attr('data-parentId', parentId);
+    $(this).parent().parent().after($('#formComment'));
     $("#formComment").show();
+    $('body').animate({scrollTop: $(this).parent().offset().top - 200}, 300);
     $(this).hide();
+    $('#commentAuthor').focus();
 });
 
 $("#listComment").on('click', "#commentCancel", function (e){   
@@ -110,7 +117,7 @@ $("#listComment").on('click', "#commentCancel", function (e){
 $("#listComment").on('click', "#commentSubmit" ,function(e){
     e.preventDefault();
     var postId = parseInt($('#postId').attr('name'));
-    var parentId = $(this).parent().parent().parent().attr('parentId');
+    var parentId = $(this).parent().parent().parent().attr('data-parentId');
     var author = $('#commentAuthor').val();
     var content = $('#commentContent').val();
     if(author != "" && content != ""){
@@ -130,7 +137,7 @@ $("#listComment").on('click', "#commentSubmit" ,function(e){
             'text');
     };
     $(".commentAdd").show();
-    loadComment();
+    setTimeout(loadComment, 50);
 });
 
 // Report & Moderate comment
@@ -148,22 +155,22 @@ $("body").on('click', ".commentReport", function(e){
 
 $("body").on('click', ".commentUnreport", function(e){
     e.preventDefault();
-    var id = $(this).parent().attr('id');
+    var id = $(this).parent().parent().attr('id');
     $.post(
         '/admin/comment-unreport.html',
         { 'id': id }
     );
     if ($(document).attr('title') == "Tableau de bord"){
-        $('#'+ id).remove();
+        $('#'+ id).hide();
     } else {
-        $(this).parent().children('span').remove();
-        $(this).remove();
+        $(this).parent().parent().children('span').hide();
+        $(this).hide();
     }
 });
 
 $("body").on('click', ".commentModerate", function(e){
     e.preventDefault();
-    var id = $(this).parent().attr('id');
+    var id = $(this).parent().parent().attr('id');
     $.post(
         '/admin/comment-moderate.html',
         { 'id': id }
@@ -171,11 +178,11 @@ $("body").on('click', ".commentModerate", function(e){
     if ($(document).attr('title') == "Tableau de bord"){
         $('#'+ id).remove();
     } else {
-        $(this).parent().children('span').remove();
-        $(this).parent().children('.commentUnreport').remove();
-        $(this).parent().children('.commentAdd').remove();
-        $(this).parent().parent().children('.commentContent').replaceWith('<p>Ce commentaire a été modéré.</p>');
-        $(this).remove();
+        $(this).parent().parent().children('span').hide();
+        $(this).parent().parent().children('.commentUnreport').hide();
+        $(this).parent().parent().children('.commentAdd').hide();
+        $(this).parent().parent().parent().children('.commentContent').replaceWith('<p>Ce commentaire a été modéré.</p>');
+        $(this).hide();
     }
 });
 
@@ -199,7 +206,7 @@ $(window).load(function(){
             if (anchor == '#listComment'){
                 $('html,body').animate({scrollTop: $(anchor).offset().top}, 'slow');
             } else {
-                $('html,body').animate({scrollTop: $(anchor).parent().parent().offset().top}, 'slow');
+                $('html,body').animate({scrollTop: $(anchor).parent().parent().parent().offset().top}, 'slow');
             }
             }
         , 50)

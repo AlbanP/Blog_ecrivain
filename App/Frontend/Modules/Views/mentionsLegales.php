@@ -1,12 +1,7 @@
-<nav class="row">
-	<div class="navBar">
-		<a href="/" class="btn btn-info">Accueil</a>
-		<?php include ('_menuUser.php') ?> 
-	</div>
-</nav>
+<?php include '_navMenu.php' ?> 
 
-<section class="row">
-	<div class="col-xs-10 col-xs-push-1">	
+<section class="container-fluid margTop50">
+	<div class="col-xs-10 col-xs-push-1 margBot15">	
 		<h1>Mentions légales</h1>
 		<p>Conformément aux dispositions des Articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l'économie numérique, dite L.C.E.N., il est porté à la connaissance des utilisateurs et visiteurs du site</p>
 		<p> les présentes mentions légales.</p>

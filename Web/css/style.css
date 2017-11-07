@@ -15,11 +15,14 @@ h1{
 	text-align: center;
 }
 h2{
-	font-size: 20px;
+	font-size: 22px;
 }
-p{
+p, span{
 	font-family: "Times new roman", serif;
 	font-size: 16px;
+}
+a p{
+	color: black;
 }
 a:hover{
 	text-decoration: none;
@@ -32,9 +35,8 @@ a:hover{
  	margin-left : 15px; 
 }
 .titlePost{
-	font-family : "Times new roman", serif;
-	font-size: 22px;
  	font-weight: bold;
+ 	font-size: 20px;
  	color: #7B0200;
  	margin : 5px 0 5px 0;
 }
@@ -58,12 +60,13 @@ a:hover{
 	font-weight: bold;
 	color: #3B0100;
 }
-.italic{
-	font-style: italic;
-	font-weight: bold;
-	color: #3B0100;
-}
 
+.iconMenu{
+	display: inline-block;
+}
+.glyphicon{
+	margin-left: 15px;	
+}
 /* Tooltip */
 .tooltip-inner {
   background-color: #3B0100 !important;
@@ -77,17 +80,27 @@ table {
   border-collapse: collapse;
 }
 td, th {
-	background: url('../img/fond_jaune.png');
-	color: #3B0100;
   	border-width: 0;
-	border-bottom: 1px solid #B8B8B8;
-	font-weight: normal !important;
+	border-bottom: 1px solid #3B0100;
+	font-family : "Times new roman", serif;
   	padding: 15px;
 	text-align: left;
 	vertical-align: middle;
 }
 thead, tfoot {
   text-transform: uppercase; 
+}
+th {
+	background: #3B0100;
+	color: #88870E;
+	font-size: 16px;
+	font-weight: bold !important;
+}
+td {
+	background: url('../img/fond_jaune.png');
+	color: #7B0200;
+	font-size: 16px;
+ 	font-weight: normal !important;
 }
 /* Margin */
 .margTop5{
@@ -105,7 +118,9 @@ thead, tfoot {
 .margBot15{
 	margin-bottom: 15px;
 }
-
+.margTop50{
+	margin-top: 50px;
+}
 /* border */
 .borderAll{
 	box-shadow: 6px 6px 8px #3B0100;
@@ -128,16 +143,10 @@ thead, tfoot {
 	background-color: #AE4111;
 	color:white;
 }
-.btnValid{
-	font-family: arial, sans-serif;
-	background-color: #0A79C7;
-	color:white;
-}
 .menuList{
 	background: url('../img/fond_jaune.png');
 	border: 1px solid #3B0100;
 }
-
 .modal-content{
 	background: url('../img/fond_jaune.png');
 	border-color: #3B0100;
@@ -145,16 +154,6 @@ thead, tfoot {
 
 
 /* Header */
-header{
-
-}
-.navBar{
-	background-color: #3B0100;
-	padding: 10px 15px 10px 15px ; 
-}
-#logo{
-	margin-top: 15px;
-}
 #author{
 	padding: 15px 0 0 0;
 	text-align: center;
@@ -173,50 +172,21 @@ header{
 	width: 15%;
 }
 /* Nav */
-
-
-
-/* Section */
-section{
-	margin-bottom: 60px;
+.navbar{
+	background-color: #3B0100;
+	border-radius: 0px;
 }
-article{
-	margin-top: 15px;
-	margin-bottom: 15px;
+.navbar-text:hover{
+	color: #88870E;
 }
-article a div{
-	margin-top: 15px;
-	margin-bottom: 15px;
-	padding: 0 10px 0 10px;   
+
+/* Article */
+.post-resume{
+	margin-top: 15px; 
+	padding: 0 5px 0 5px; 
 }
-article a div:hover{
+.post-resume:hover{
 	box-shadow: 6px 6px 8px #3B0100;
-}
-article h2{
- 	font-family: "Times new roman", serif ;
- 	font-size: 22px;
- 	font-weight: bold;
- 	color: #7B0200;
- 	margin : 5px 0 5px 0;
- }
-article p{
-	font-family: "Times new roman", serif;
-	font-size: 16px;
-	color: black;
-	margin: 0;
-	padding: 0;
-}
-.textCenter{
-	text-align: center;
-}
-
-.book{
-	margin: 15px 0px 15px 0px;
-}
-.book p{
-	font-weight: bold;
-	margin: 0;
-	padding: 0;
 }
 /* Footer */
 footer{
@@ -226,8 +196,8 @@ footer{
 	bottom: 0;
 	width: 100%;
 	align-items: center;
-	height: 50px;
 	background-color: #3B0100;
+	height: 50px;
 	margin: 0 -15px 0 -15px;
 }
 footer a{
@@ -237,3 +207,4 @@ footer a{
 footer a:hover{
 	color: #88870E;
 }
+

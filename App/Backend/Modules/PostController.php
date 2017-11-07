@@ -10,7 +10,7 @@ class PostController extends BackController{
     	$this->newPage('dashboard');
       $this->page->addVar('title', 'Tableau de bord');
     	$managerPost = $this->managers->getManagerOf('Post');
-    	$managerComment = $this->managers->getManagerOf('Comment');
+    	$managerComment = $this->managers->getManagerOf('Comment');      
     	$this->page->addVar('listPost', $managerPost->getList('all', 'dateDesc'));
     	$this->page->addVar('numberPost', $managerPost->countPost('posted'));
     	$this->page->addVar('numberCommentAll', $managerComment->countComment('all', 'all'));
@@ -64,7 +64,7 @@ class PostController extends BackController{
 	  			$id = $request->postData('Order' . $newOrder) ;
 	  			$this->managers->getManagerOf('Post')->posted((int)$id, (int)$newOrder);
 	  		}
-	  		//$this->app->session()->setFlash('L\'ordre des chapitre a été modifié !');
+	  		$this->app->session()->setFlash('L\'ordre des chapitre a été modifié !');
   		}
     		$managerPost = $this->managers->getManagerOf('Post');
     		$this->page->addVar('numberPost', $managerPost->countPost('posted'));

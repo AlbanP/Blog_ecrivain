@@ -6,7 +6,6 @@ use \Entity\User;
 
 abstract class UserManager extends Manager{
   abstract public function getListOf();
-  abstract public function countUser();
   abstract public function userUnique($name);
   abstract protected function add(User $user);
   abstract protected function modify(User $user);

@@ -10,17 +10,11 @@ class UserManagerPDO extends UserManager{
     $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\User');
     $listUser = $requete->fetchAll();
     foreach ($listUser as $user){
-      $user->setDateCreation(new \DateTime($user->dateCreation()));
+      $user->setDate(new \DateTime($user->date()));
     }
     $requete->closeCursor();  
     
     return $listUser;
-  }
-  
-  public function countUser(){
-    $sql = 'SELECT COUNT(*) FROM user';
-  
-    return $this->dao->query($sql)->fetchColumn();
   }
   
   public function userUnique($name){
@@ -29,7 +23,7 @@ class UserManagerPDO extends UserManager{
     $requete->execute();
     $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\User');
     if ($user = $requete->fetch()) {
-      $user->setDateCreation(new \DateTime($user->dateCreation()));
+      $user->setDate(new \DateTime($user->date()));
   
       return $user;
     }

@@ -1,12 +1,11 @@
-
-<header class="row">
-    <a href="/"><img id="logo" class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0" src="/img/logo.jpg" alt="Retour vers le site" title="Retour vers le site"></a>
+<div class="container-fluid margTop15">
+    <a href="/"><img id="logo" class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0" src="/img/logo.jpg" alt="Retour vers le site" data-toggle="tooltip" title="Retour vers le site" data-placement="bottom"></a>
 	<form action="" method="post" class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-0 form-horizontal">
 		<legend>Connexion</legend>
 	  	<div class="row">
 	  		<label for="name" class="col-sm-3 control-label">Identifiant</label>
 	  		<div class="col-sm-9">
-	  			<input type="text" name="name" class="form-control" required />
+	  			<input type="text" name="name" class="form-control" required autofocus />
 	  		</div>
 	  	</div>
 	  	<div class="row margTop15">
@@ -20,4 +19,4 @@
 	  		<input type="submit" value="Connexion" class="btn btn-primary" />
 	  	</div>
 	</form>
-</header>
+</div>

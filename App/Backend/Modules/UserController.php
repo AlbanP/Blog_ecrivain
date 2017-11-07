@@ -33,14 +33,17 @@ class UserController extends BackController{
   
   public function executeManageUser(HTTPRequest $request){
     $this->newPage('manageUser');
-    $user = $this->managers->getManagerOf('User');
     $this->page->addVar('title', 'Utilisateurs');
-    $this->page->addVar('numberUser',$user->countUser());
-    $this->page->addVar('listUser',$user->getListOf());
+    $this->page->addVar('listUser', $this->managers->getManagerOf('User')->getListOf());
   }
   
   public function executeAdd(HTTPRequest $request){
-    if ($request->postExists('name') && $request->postExists('pass') && $request->postExists('email')){ $this->processForm($request);};
+    $user = $this->managers->getManagerOf('User')->userUnique($request->postData('name'));
+    if ($user != null){
+      $this->app->session()->setFlash('Ajout non enregistré car le <strong>NOM</strong> a déjà été affecté. Veuillez choisir un autre nom.' );
+      $this->app->httpResponse()->redirect('/admin/user-manage.html');
+    }
+    if ($request->postExists('name') && $request->postExists('pass')) { $this->processForm($request);};
   }
   
   public function executeUpdate(HTTPRequest $request){
@@ -51,8 +54,16 @@ class UserController extends BackController{
   }
   
   public function executeDelete(HTTPRequest $request){
-      $this->processCheckPass($request);
-      $this->managers->getManagerOf('User')->delete($request->postData('id'));      
+      $valid = $this->processCheckPass($request);
+      if ($valid){
+        $this->managers->getManagerOf('User')->delete($request->postData('id'));
+
+        echo json_encode(true);
+        return; 
+      }
+      
+      echo json_encode(false);
+      //return null;
   }
   
   public function processForm(HTTPRequest $request){
@@ -68,6 +79,7 @@ class UserController extends BackController{
     }
     if ($user->isValid()){
       $this->managers->getManagerOf('User')->save($user);
+      $this->app->httpResponse()->redirect('/admin/user-manage.html');
     } else {
       
       return $user->erreurs();
@@ -76,9 +88,13 @@ class UserController extends BackController{
   }
   
   public function processCheckPass($request){
-    if (empty($request->postData('pass'))) { exit("<p>Vous devez saisir le mot de passe !</p>");}
     $passHache = sha1($request->postData('pass'));
     $userPassHache = $this->managers->getManagerOf('User')->userPass($request->postData('id'));
-    if ($userPassHache != $passHache){ exit("<p>Mauvais mot de passe</p>");}
+    if ($userPassHache != $passHache){ 
+      
+      return false;
+    }
+
+    return true;
   }
 }

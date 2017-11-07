@@ -62,7 +62,16 @@ class CommentManagerPDO extends CommentManager{
                 // no WHERE 
         }
     
-    return $this->dao->query($sql)->fetchColumn();
+        return $this->dao->query($sql)->fetchColumn();
+    }
+
+    public function countCommentByPost(){
+        $q = $this->dao->prepare('SELECT postId, COUNT(*) FROM comment WHERE moderate = 0 GROUP BY postId');
+        $q->execute();
+        $result = $q->fetchAll(\PDO::FETCH_ASSOC);
+        $q->closeCursor();
+
+        return $result;
     }
 
     public function report($id){
@@ -74,7 +83,7 @@ class CommentManagerPDO extends CommentManager{
     public function unreport($id){
         $sql = $this->dao->prepare('UPDATE comment SET report = 0 WHERE id = :id');
         $sql->bindValue(':id', $id , \PDO::PARAM_INT );
-        $sql->execute();;
+        $sql->execute();
     }
 
     public function moderate($id){

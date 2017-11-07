@@ -7,7 +7,7 @@ class User extends Entity{
   protected $name,
             $pass,
             $email,
-            $dateCreation,
+            $date,
             $role;
 
   const NAME_INVALID = 1;
@@ -33,14 +33,11 @@ class User extends Entity{
   }
   
   public function setEmail($email){
-    if (!is_string($email) || empty($email)){
-      $this->erreurs[] = self::EMAIL_INVALID;
-    }
     $this->email = $email;
   }
   
-  public function setDateCreation(\DateTime $dateCreation){
-    $this->dateCreation = $dateCreation;
+  public function setDate(\DateTime $date){
+    $this->date = $date;
   }
   
   public function setRole($role){
@@ -62,9 +59,9 @@ class User extends Entity{
     return $this->email;
   }
   
-  public function dateCreation(){
+  public function date(){
   
-    return $this->dateCreation;
+    return $this->date;
   }
   
   public function role(){

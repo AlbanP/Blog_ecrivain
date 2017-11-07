@@ -9,7 +9,7 @@
 
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
-    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     <link rel="stylesheet" href="/css/style.css" type="text/css" />
@@ -38,24 +38,21 @@
   </head>
   
   <body>
-    <div class="container-fluid">
-      <nav class="row">
-        <div class="navBar">
-          <a href="/" class="btn btn-info">Accueil</a>
-          <?php if($title != "Tableau de bord") { echo '<a href="/admin/" class="btn btnPosts">Tableau de bord</a>' ;}?>
-          <?php if($title != "Ajout d'un chapitre") { echo '<a href="/admin/post-add.html" class="btn btn-success">Ajouter un chapitre</a>' ;} ?>
-          <?php if($title != "Classement") { echo '<a href="/admin/post-listOrder.html" class="btn btn-warning">Classer les chapitres</a>' ;}?>
-          <span class="titlePage"><?= $title ?></span>
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <a href="/" class="btn btn-info navbar-btn">Accueil</a>
+        <?php if($title != "Tableau de bord") { echo '<a href="/admin/" class="btn btn-primary navbar-btn">Tableau de bord</a>' ;}?>
+        <?php if($title != "Ajout d'un chapitre") { echo '<a href="/admin/post-add.html" class="btn btn-success navbar-btn">Ajouter un chapitre</a>' ;} ?>
+        <?php if($title != "Classement") { echo '<a href="/admin/post-listOrder.html" class="btn btn-warning navbar-btn">Classer les chapitres</a>' ;}?>
 
-          <?php include __DIR__.'/../Modules/Views/_menuUser.php' ?> 
+        <?php include __DIR__.'/../Modules/Views/_menuUser.php' ?> 
         
-        </div>
-      </nav>
+      </div>
+    </nav>
+    
       <?= $content ?>
-    </div>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/js/modal_tooltip.js"></script>
-    <script src="/js/listOrder.js"></script>
   </body>
 </html>
