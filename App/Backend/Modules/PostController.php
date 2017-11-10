@@ -6,9 +6,10 @@ use \PiFram\HTTPRequest;
 use \Entity\Post;
 
 class PostController extends BackController{
-	public function executeDashboard(HTTPRequest $request){
+	public function executeDashboard(){
     	$this->newPage('dashboard');
       $this->page->addVar('title', 'Tableau de bord');
+      $this->page->addVar('script', '<script src="/js/manageComments.js"></script><script src="/js/modal_tooltip.js"></script>');
     	$managerPost = $this->managers->getManagerOf('Post');
     	$managerComment = $this->managers->getManagerOf('Comment');      
     	$this->page->addVar('listPost', $managerPost->getList('all', 'dateDesc'));
@@ -19,56 +20,65 @@ class PostController extends BackController{
   	}
 
   	public function executeAdd(HTTPRequest $request){
-    	$this->newPage('insert');
       if ($request->postExists('title')){
-      		$this->processForm($request);
-    	}
-    	$this->page->addVar('title', "Ajout d'un chapitre");
+      	$this->processForm($request);
+    	} else {
+        $this->newPage('insert');
+        $this->page->addVar('script', '<script src="/js/quitSavePost.js"></script>');
+        $this->page->addVar('title', "Ajout d'un chapitre");
+      }
   	}
 
   	public function executeUpdate(HTTPRequest $request){
-    	$this->newPage('insert');
       if ($request->postExists('title')){
       		$this->processForm($request);
     	} else {
-      		$this->page->addVar('post', $this->managers->getManagerOf('Post')->getUnique($request->getData('id')));
+        $this->newPage('insert');
+        $this->page->addVar('title', "Modification d'un chapitre");
+        $this->page->addVar('script', '<script src="/js/quitSavePost.js"></script>');
+      	$this->page->addVar('post', $this->managers->getManagerOf('Post')->getUnique($request->getData('id')));
     	}
-    	$this->page->addVar('title', "Modification d'un chapitre");
   	}
 
   	public function executeDelete(HTTPRequest $request){
-    	$this->managers->getManagerOf('Post')->delete($request->getData('id'));
+      if ($request->getExists('id')) {
+    	  $this->managers->getManagerOf('Post')->delete($request->getData('id'));
+      }
     	$this->app->httpResponse()->redirect('.');
   	}
 
   	public function executePosted(HTTPRequest $request){
-    	$post = $this->managers->getManagerOf('Post')->getUnique($request->getData('id'));
-    	$orderPosted = $post['orderPosted'];
-    	if (is_null($orderPosted)){
-    		$MaxOrder = $this->managers->getManagerOf('Post')->MaxOrderPosted() ;
-    		$orderPosted = 1 + $MaxOrder;
-    	} else {
-    		$orderPosted = NULL ;
-    	}
-    	$this->managers->getManagerOf('Post')->posted($request->getData('id'), $orderPosted);
-    	//$this->app->session()->setFlash('Le statut du chapitre a été modifié !');
+      if ($request->getExists('id')) {
+        $post = $this->managers->getManagerOf('Post')->getUnique($request->getData('id'));
+        $orderPosted = $post['orderPosted'];
+        if (is_null($orderPosted)){
+          $MaxOrder = $this->managers->getManagerOf('Post')->MaxOrderPosted() ;
+          $orderPosted = 1 + $MaxOrder;
+        } else {
+          $orderPosted = NULL ;
+        }
+        $this->managers->getManagerOf('Post')->posted($request->getData('id'), $orderPosted);
+      }
+
     	$this->app->httpResponse()->redirect('.');
   	}
 
-  	public function executeListOrder(HTTPRequest $request){
-  		$this->newPage('listOrder');
+  	public function executePostOrder(HTTPRequest $request){
+      $this->newPage('postOrder');
       $this->page->addVar('title', 'Classement');
-      if (!empty($request->postData('newListOrder'))){
+      $this->page->addVar('script', '<script src="/js/listOrder.js"></script>');
+      $managerPost = $this->managers->getManagerOf('Post');
+      $this->page->addVar('numberPost', $managerPost->countPost('posted'));
+      $this->page->addVar('listPost', $managerPost->getList('posted', 'orderPost'));
+
+      if ($request->postExists('newListOrder')) {
         $numberPosted = $this->managers->getManagerOf('Post')->countPost('posted');
 	  		for ($newOrder = 1; $newOrder <= $numberPosted; $newOrder++) { 
 	  			$id = $request->postData('Order' . $newOrder) ;
 	  			$this->managers->getManagerOf('Post')->posted((int)$id, (int)$newOrder);
 	  		}
 	  		$this->app->session()->setFlash('L\'ordre des chapitre a été modifié !');
-  		}
-    		$managerPost = $this->managers->getManagerOf('Post');
-    		$this->page->addVar('numberPost', $managerPost->countPost('posted'));
-  			$this->page->addVar('listPost', $managerPost->getList('posted', 'orderPost'));
+  		} 
   	}
 
   	public function processForm(HTTPRequest $request){

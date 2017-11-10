@@ -26,6 +26,7 @@ class PostController extends BackController {
   
   public function executeShow(HTTPRequest $request) {
     $this->newPage('show');
+    $this->page->addVar('script', '<script src="/js/manageComments.js"></script><script src="/js/modal_tooltip.js"></script>');
     $post = $this->managers->getManagerOf('Post')->getUnique($request->getData('id'));
     if (empty($post)) {
       $this->app->httpResponse()->redirect404();

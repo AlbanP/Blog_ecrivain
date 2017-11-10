@@ -7,7 +7,8 @@ class Post extends Entity{
   protected $title,
             $content,
             $dateUpdate,
-            $orderPosted; //int
+            $orderPosted, //int
+            $nbComment;
 
   const TITLE_INVALID = 1;
   const CONTENT_INVALID = 2;
@@ -39,6 +40,11 @@ class Post extends Entity{
     $this->orderPosted = $orderPosted;
   }
 
+  public function setNbComment($nbComment){
+    if ($nbComment == null){$nbComment = 0;}
+    $this->nbComment = $nbComment;
+  }
+
   public function title(){
   
     return $this->title;
@@ -57,5 +63,10 @@ class Post extends Entity{
   public function orderPosted(){
   
     return $this->orderPosted;
+  }
+
+  public function nbComment(){
+  
+    return $this->nbComment;
   }
 }

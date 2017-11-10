@@ -59,19 +59,19 @@ function showComment(comment){
         } else if(session == null) {
             commentArticle += '<div>'
             commentArticle += '<a type="button" class="commentAdd btn btn-xs btnComments" style="margin-right: 5px"> Répondre </a>';
-            commentArticle += '<a type="button" class="btn btn-xs btn-warning" data-confirm="Si vous considérez que ce message est inapproprié, validez pour nous en avertir." action="commentReport" idItem="' + comment[i]["id"] + '" nameId="' + comment[i]["author"] + '" titleModal="Signalement du message de"  > Signaler </a>';
+            commentArticle += '<a type="button" class="btn btn-xs btn-warning" data-confirm="Si vous considérez que ce message est inapproprié, validez pour nous en avertir." data-action="commentReport" data-id-item="' + comment[i]["id"] + '" data-name="' + comment[i]["author"] + '" data-title="Signalement du message de"  > Signaler </a>';
             commentArticle += '</div>'
         }
         if (session != null){
             commentArticle += '<div class="iconMenu">'
             if (comment[i]["moderate"] == 0) {
-                commentArticle += '<a class="commentAdd text-warning" data-toggle="tooltip" title="Répondre"><span class="glyphicon glyphicon-pencil"></span></a>';
-                commentArticle += '<a class="commentModerate text-danger margLeft15" data-toggle="tooltip" title="Modérer"><span class="glyphicon glyphicon-thumbs-down"></span></a>';
+                commentArticle += '<a class="commentAdd text-warning"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Répondre"></span></a>';
+                commentArticle += '<a class="commentModerate text-danger margLeft15"><span class="glyphicon glyphicon-thumbs-down" data-toggle="tooltip" title="Modérer"></span></a>';
                 if (comment[i]["report"] == 1) {
-                    commentArticle += '<a class="commentUnreport text-success margLeft15" data-toggle="tooltip" title="Accepter"><span class="glyphicon glyphicon-thumbs-up"></span></a>';
+                    commentArticle += '<a class="commentUnreport text-success margLeft15"><span class="glyphicon glyphicon-thumbs-up" data-toggle="tooltip" title="Accepter"></span></a>';
                 }
             }
-            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." data-action="commentDelete" data-idItem="' + comment[i]["id"] + '" data-nameId="' + comment[i]["author"] + '" data-titleModal="Supression du (et des) commentaire(s) de" data-toggle="tooltip" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>';      
+            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." data-action="commentDelete" data-id-item="' + comment[i]["id"] + '" data-name="' + comment[i]["author"] + '" data-title="Supression du (et des) commentaire(s) de"><span class="glyphicon glyphicon-remove data-toggle="tooltip" title="Supprimer""></span></a>';      
             commentArticle += '</div>'
         }
         commentArticle += '</div></div></div>';    
@@ -98,7 +98,6 @@ $("#listComment").on('click', ".commentAdd",function(e){
     stopReloadComment();
     $(".commentAdd").show();
     var parentId = $(this).parent().parent().attr('id');
-    console.log(parentId);
     $('#formComment').attr('data-parentId', parentId);
     $(this).parent().parent().after($('#formComment'));
     $("#formComment").show();
@@ -143,12 +142,12 @@ $("#listComment").on('click', "#commentSubmit" ,function(e){
 // Report & Moderate comment
 $("body").on('click', ".commentReport", function(e){
     e.preventDefault();
-    var id = $(this).attr('idItem');
+    var id = $(this).data('id-item');
     $.post(
         '/comment-report.html',
         { 'id': id }
     );
-    $('#'+ id + '> a').remove();
+    $('#'+ id + '> div').remove();
     $('#'+ id).prepend('<span class="label label-info margRight15"> Message signalé </span>');
     $('#dataConfirmModal').modal('toggle');
 });

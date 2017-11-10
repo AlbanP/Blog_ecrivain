@@ -30,7 +30,7 @@
         toolbar: ' undo redo | bold italic underline strikethrough | superscript subscript | alignleft aligncenter alignright alignjustify | outdent indent | removeformat | print | fullscreen | searchreplace  ',
         init_instance_callback: function (editor) {
           editor.on('Change', function (e) {
-            changed();
+            changed(true);
           });
         }
       });
@@ -38,21 +38,34 @@
   </head>
   
   <body>
-    <nav class="navbar navbar-fixed-top">
+    <nav class="navbar navbar-fixed-top" >
       <div class="container-fluid">
-        <a href="/" class="btn btn-info navbar-btn">Accueil</a>
-        <?php if($title != "Tableau de bord") { echo '<a href="/admin/" class="btn btn-primary navbar-btn">Tableau de bord</a>' ;}?>
-        <?php if($title != "Ajout d'un chapitre") { echo '<a href="/admin/post-add.html" class="btn btn-success navbar-btn">Ajouter un chapitre</a>' ;} ?>
-        <?php if($title != "Classement") { echo '<a href="/admin/post-listOrder.html" class="btn btn-warning navbar-btn">Classer les chapitres</a>' ;}?>
-
-        <?php include __DIR__.'/../Modules/Views/_menuUser.php' ?> 
-        
+        <div class="navbar-header col-xs-9">   
+          <button type="button" class="pull-left navbar-toggle margLeft5" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse col-xs-9">           
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li><div><a href="/" class="btn btn-info navbar-btn">Accueil</a></div></li>
+              <li><div class="margLeft5"><?php if($title != "Tableau de bord") { echo '<a href="/admin/" class="btn btn-primary navbar-btn">Tableau de bord</a>' ;}?></div></li>
+              <li><div class="margLeft5"><?php if($title != "Ajout d'un chapitre") { echo '<a href="/admin/post-add.html" class="btn btn-success navbar-btn">Ajouter un chapitre</a>' ;} ?></div></li>
+              <li><div class="margLeft5"><?php if($title != "Classement") { echo '<a href="/admin/post-postOrder.html" class="btn btn-warning navbar-btn">Classer les chapitres</a>' ;}?></div></li>
+            </ul>
+          </div>  
+        </div>
+        <?php require __DIR__.'/../Modules/Views/_menuUser.php' ?>
       </div>
     </nav>
     
       <?= $content ?>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/js/modal_tooltip.js"></script>
+
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <?= isset($script) ? $script : '' ?>
+      
   </body>
 </html>

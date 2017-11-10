@@ -60,7 +60,6 @@ a:hover{
 	font-weight: bold;
 	color: #3B0100;
 }
-
 .iconMenu{
 	display: inline-block;
 }
@@ -108,6 +107,9 @@ td {
 }
 .margLeft15{
 	margin-left: 15px;
+}
+.margLeft5{
+	margin-left: 5px;
 }
 .margRight15{
 	margin-right: 15px;
@@ -179,8 +181,11 @@ td {
 .navbar-text:hover{
 	color: #88870E;
 }
+.icon-bar {
+  background-color: white;
+}
 
-/* Article */
+/* Content */
 .post-resume{
 	margin-top: 15px; 
 	padding: 0 5px 0 5px; 
@@ -188,6 +193,12 @@ td {
 .post-resume:hover{
 	box-shadow: 6px 6px 8px #3B0100;
 }
+@media (max-width: 768px) {
+  #reportedBlock {
+    margin-top: 30px;
+  }
+}
+
 /* Footer */
 footer{
 	display: flex;

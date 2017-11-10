@@ -19,14 +19,14 @@ class CommentManagerPDO extends CommentManager{
   	}
 
     public function getReported(){
-        $requete = $this->dao->prepare('SELECT id, postId, parentId, author, content, date, report, moderate  FROM comment WHERE report = 1 AND moderate = 0 ORDER BY date');
-        $requete->execute();
-        $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Comment');
-        $commentReported = $requete->fetchAll();
+        $q = $this->dao->prepare('SELECT id, postId, parentId, author, content, date, report, moderate  FROM comment WHERE report = 1 AND moderate = 0 ORDER BY date');
+        $q->execute();
+        $q->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Comment');
+        $commentReported = $q->fetchAll();
         foreach ($commentReported as $comment){
             $comment->setDate(new \DateTime($comment->date()));
         }
-        $requete->closeCursor(); 
+        $q->closeCursor(); 
 
         return $commentReported;
     }
@@ -75,21 +75,21 @@ class CommentManagerPDO extends CommentManager{
     }
 
     public function report($id){
-        $sql = $this->dao->prepare('UPDATE comment SET report = 1 WHERE id = :id');
-        $sql->bindValue(':id', $id , \PDO::PARAM_INT );
-        $sql->execute();;
+        $q = $this->dao->prepare('UPDATE comment SET report = 1 WHERE id = :id');
+        $q->bindValue(':id', $id , \PDO::PARAM_INT );
+        $q->execute();;
     }
 
     public function unreport($id){
-        $sql = $this->dao->prepare('UPDATE comment SET report = 0 WHERE id = :id');
-        $sql->bindValue(':id', $id , \PDO::PARAM_INT );
-        $sql->execute();
+        $q = $this->dao->prepare('UPDATE comment SET report = 0 WHERE id = :id');
+        $q->bindValue(':id', $id , \PDO::PARAM_INT );
+        $q->execute();
     }
 
     public function moderate($id){
-        $sql = $this->dao->prepare('UPDATE comment SET moderate = 1 WHERE id = :id');
-        $sql->bindValue(':id', $id , \PDO::PARAM_INT );
-        $sql->execute();;
+        $q = $this->dao->prepare('UPDATE comment SET moderate = 1 WHERE id = :id');
+        $q->bindValue(':id', $id , \PDO::PARAM_INT );
+        $q->execute();;
     }
 
     public function delete($id){

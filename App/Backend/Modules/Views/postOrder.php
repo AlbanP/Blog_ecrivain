@@ -26,4 +26,3 @@
     </div>
   </form>
 </div>
-<script src="/js/listOrder.js"></script>

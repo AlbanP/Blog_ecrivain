@@ -1,16 +1,17 @@
-
 var change = false;
 
 window.addEventListener("beforeunload", function(e) {
+    e = e || window.event;
     if (change) {
-        
-        e.returnValue = " ";        
-        //return " ";
+        if(e){
+        	e.returnValue = " ";  
+        }     
+        return " ";
     }
 
     return false;
 });
 
-function changed(){
-	change = true;
+function changed($state){
+	change = $state;
 }

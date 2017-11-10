@@ -6,10 +6,10 @@
         <div class="form-horizontal margTop15">   
             <label for="title" class="control-label col-xs-2">Titre : </label>
             <div class="col-xs-4">
-                <input id="title" class="form-control" type="text" name="title" onchange="changed()" value="<?= isset($post) ? $post['title'] : '' ?>" required />
+                <input id="title" class="form-control" type="text" name="title" onchange="changed(true)" value="<?= isset($post) ? $post['title'] : '' ?>" required />
             </div>
-            <input type="submit" name="typeSave" value="Publier" class="btn btn-sm btn-success margLeft15" />
-            <input type="submit" name="typeSave" value="Brouillon" class="btn btn-sm btn-info" />
+            <input type="submit" name="typeSave" value="Publier" class="btn btn-sm btn-success margLeft15" onchange="changed(false)" >
+            <input type="submit" name="typeSave" value="Brouillon" class="btn btn-sm btn-info" onchange="changed(false)" >
             <span class="margLeft15"><?php if ($session->hasFlash()) echo $session->getFlash(); ?></span>  
         </div>
         <div class="margTop15">
@@ -17,4 +17,3 @@
         </div>
     </form>
 </div>
-<script src="/js/quitSavePost.js"></script>

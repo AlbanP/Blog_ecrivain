@@ -4,9 +4,9 @@ namespace Model;
 use \Entity\Post;
 
 class PostManagerPDO extends PostManager{
-  
+
   public function getList($posted, $order){
-    $sql = 'SELECT id, title, content, dateUpdate, orderPosted FROM post';
+    $sql = 'SELECT post.id, post.title, post.content, post.dateUpdate, post.orderPosted, tmp.nbComment FROM post LEFT JOIN ( SELECT post.id, COUNT(*) AS nbComment FROM post INNER JOIN comment ON postId = post.id GROUP BY post.id) AS tmp ON tmp.id = post.id';
     switch ($posted) {
       case 'posted':
         $sql .= ' WHERE orderPosted IS NOT NULL';
@@ -32,26 +32,26 @@ class PostManagerPDO extends PostManager{
         $sql .= ' ORDER BY orderPosted DESC';
       break;
     }
-    $requete = $this->dao->query($sql);
-    $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
+    $q = $this->dao->query($sql);
+    $q->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
     
-    $listPost = $requete->fetchAll();
+    $listPost = $q->fetchAll();
     foreach ($listPost as $post){
       $post->setDateUpdate(new \DateTime($post->dateUpdate()));
     }
-    $requete->closeCursor();  
+    $q->closeCursor();  
     
     return $listPost;
   }
 
   public function getUnique($id){
-    $requete = $this->dao->prepare('SELECT id, title, content, dateUpdate, orderPosted FROM post WHERE id = :id');
-    $requete->bindValue(':id', (int) $id, \PDO::PARAM_INT);
-    $requete->execute();
-    $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
-    if ($post = $requete->fetch()) {
+    $q = $this->dao->prepare('SELECT id, title, content, dateUpdate, orderPosted FROM post WHERE id = :id');
+    $q->bindValue(':id', (int) $id, \PDO::PARAM_INT);
+    $q->execute();
+    $q->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\Post');
+    if ($post = $q->fetch()) {
       $post->setDateUpdate(new \DateTime($post->dateUpdate()));
-      $requete->closeCursor(); 
+      $q->closeCursor(); 
 
       return $post;
     }
@@ -89,20 +89,20 @@ class PostManagerPDO extends PostManager{
   }
   
   protected function add(Post $post){
-    $requete = $this->dao->prepare('INSERT INTO post SET title = :title, content = :content, dateUpdate = NOW(), orderPosted = :orderPosted');
-    $requete->bindValue(':title', $post->title());
-    $requete->bindValue(':content', $post->content());
-    $requete->bindValue(':orderPosted', $post->orderPosted());
-    $requete->execute();
+    $q = $this->dao->prepare('INSERT INTO post SET title = :title, content = :content, dateUpdate = NOW(), orderPosted = :orderPosted');
+    $q->bindValue(':title', $post->title());
+    $q->bindValue(':content', $post->content());
+    $q->bindValue(':orderPosted', $post->orderPosted());
+    $q->execute();
   }
   
   protected function modify(Post $post){
-    $requete = $this->dao->prepare('UPDATE post SET title = :title, content = :content, dateUpdate = NOW(), orderPosted = :orderPosted WHERE id = :id');
-    $requete->bindValue(':title', $post->title());
-    $requete->bindValue(':content', $post->content());
-    $requete->bindValue(':orderPosted', $post->orderPosted());
-    $requete->bindValue(':id', $post->id(), \PDO::PARAM_INT);
-    $requete->execute();
+    $q = $this->dao->prepare('UPDATE post SET title = :title, content = :content, dateUpdate = NOW(), orderPosted = :orderPosted WHERE id = :id');
+    $q->bindValue(':title', $post->title());
+    $q->bindValue(':content', $post->content());
+    $q->bindValue(':orderPosted', $post->orderPosted());
+    $q->bindValue(':id', $post->id(), \PDO::PARAM_INT);
+    $q->execute();
   }
   
   public function delete($id){
@@ -110,9 +110,9 @@ class PostManagerPDO extends PostManager{
   }
   
   public function posted($id, $orderPosted){
-    $requete = $this->dao->prepare('UPDATE post SET orderPosted = :orderPosted WHERE id = :id');
-    $requete->bindValue(':orderPosted', $orderPosted);
-    $requete->bindValue(':id', $id, \PDO::PARAM_INT);
-    $requete->execute();
+    $q = $this->dao->prepare('UPDATE post SET orderPosted = :orderPosted, dateUpdate = NOW() WHERE id = :id');
+    $q->bindValue(':orderPosted', $orderPosted);
+    $q->bindValue(':id', $id, \PDO::PARAM_INT);
+    $q->execute();
   }   
 }

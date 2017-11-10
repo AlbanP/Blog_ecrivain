@@ -3,13 +3,13 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="dataConfirmLabel">' + title + ' "' + name + '"</h3>
+				<h3 id="dataConfirmLabel"></h3>
 			</div>
-			<div class="modal-body">' + message + '</div>
+			<div class="modal-body"></div>
 			<div class="modal-footer">
 				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"> Annuler </button>
-				<button type="submit" class="btn btn-warning ' + action + '" idItem="' + id + '"> Valider </button>
-				<a href="' + href + '" type="submit" class="btn btn-warning"> Valider </a>
+				<button id="modal-valid-action" type="submit" class="" data-id-item=""> Valider </button>
+				<a href="" id="modal-valid-href" type="submit" class="btn btn-warning"> Valider </a>
 			</div>
 		</div>
 	</div>
