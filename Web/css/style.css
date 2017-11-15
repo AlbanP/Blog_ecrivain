@@ -184,6 +184,17 @@ td {
 .icon-bar {
   background-color: white;
 }
+.nav-icon {
+    display: none;
+  }
+@media (max-width: 768px) {
+  .nav-icon {
+    display: inline;
+  }
+  .nav-text {
+    display: none;
+  }
+}
 
 /* Content */
 .post-resume{

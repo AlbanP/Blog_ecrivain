@@ -50,7 +50,7 @@
         <div class="collapse navbar-collapse col-xs-9">           
           <div class="container-fluid">
             <ul class="nav navbar-nav">
-              <li><div><a href="/" class="btn btn-info navbar-btn">Accueil</a></div></li>
+              <li><div><a href="/" class="btn btn-info navbar-btn margLeft5">Accueil</a></div></li>
               <li><div class="margLeft5"><?php if($title != "Tableau de bord") { echo '<a href="/admin/" class="btn btn-primary navbar-btn">Tableau de bord</a>' ;}?></div></li>
               <li><div class="margLeft5"><?php if($title != "Ajout d'un chapitre") { echo '<a href="/admin/post-add.html" class="btn btn-success navbar-btn">Ajouter un chapitre</a>' ;} ?></div></li>
               <li><div class="margLeft5"><?php if($title != "Classement") { echo '<a href="/admin/post-postOrder.html" class="btn btn-warning navbar-btn">Classer les chapitres</a>' ;}?></div></li>

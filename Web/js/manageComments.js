@@ -43,41 +43,49 @@ function showComment(comment){
         function commentBuild() {
         var session = $('#session').attr('name');
         var d = comment[i]["date"].split(/[- :]/);
+        var idComment = comment[i]["id"];
+        var author = htmlspecialchars(comment[i]["author"]);
+        var content = htmlspecialchars(comment[i]["content"]).replace(/\n/g, "<"+"br/>");
         var date = d[2] + '/' + d[1] + '/'+ d[0] + ' à ' + d[3] + 'h' + d[4];
+        var moderate = comment[i]["moderate"];
+        var report = comment[i]["report"];
+
         var commentArticle  = '<div class="media borderTop">';
         commentArticle += '<div class="media-left"><img src="' + arrowImg + '" class="media-object" style="width:35px"></div>';
         commentArticle += '<div class="media-body">';
-        commentArticle += '<p class="media-heading titlePost">' + comment[i]["author"] + '<span class="dateItem">  le ' + date + '</span></p>' ;
-        if (comment[i]["moderate"] == 1) {
+        commentArticle += '<p class="media-heading titlePost">' + author + '<span class="dateItem">  le ' + date + '</span></p>' ;
+        if (moderate == 1) {
             commentArticle += '<p>Ce commentaire a été modéré.<p>'
         } else {
-            commentArticle += '<p class="commentContent">' + comment[i]["content"].replace(/\n/g, "<"+"br/>") + '</p>';
+            commentArticle += '<p class="commentContent">' + content + '</p>';
         }
-        commentArticle += '<div id="' + comment[i]["id"] + '" name="' + comment[i]["parentId"] + '">';
-        if (comment[i]["report"] == 1 && comment[i]["moderate"] == 0) {
+        commentArticle += '<div id="' + idComment + '" name="' + parentId + '">';
+        if (report == 1 && moderate == 0) {
             commentArticle += '<span class="label label-info margRight15">Message signalé </span>';
-        } else if(session == null) {
+        } else if(session == null && moderate == 0) {
             commentArticle += '<div>'
             commentArticle += '<a type="button" class="commentAdd btn btn-xs btnComments" style="margin-right: 5px"> Répondre </a>';
-            commentArticle += '<a type="button" class="btn btn-xs btn-warning" data-confirm="Si vous considérez que ce message est inapproprié, validez pour nous en avertir." data-action="commentReport" data-id-item="' + comment[i]["id"] + '" data-name="' + comment[i]["author"] + '" data-title="Signalement du message de"  > Signaler </a>';
+            commentArticle += '<a type="button" class="btn btn-xs btn-warning" data-confirm="Si vous considérez que ce message est inapproprié, validez pour nous en avertir." data-action="commentReport" data-id-item="' + idComment + '" data-name="' + author + '" data-title="Signalement du message de"  > Signaler </a>';
             commentArticle += '</div>'
         }
         if (session != null){
             commentArticle += '<div class="iconMenu">'
-            if (comment[i]["moderate"] == 0) {
+            if (moderate == 0) {
                 commentArticle += '<a class="commentAdd text-warning"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Répondre"></span></a>';
-                commentArticle += '<a class="commentModerate text-danger margLeft15"><span class="glyphicon glyphicon-thumbs-down" data-toggle="tooltip" title="Modérer"></span></a>';
-                if (comment[i]["report"] == 1) {
+                commentArticle += '<a class="moderate text-danger margLeft15" data-confirm="En modérant le commentaire, celui-ci apparaîtra sans son contenu. Validez pour confirmer." data-action="commentModerate" data-id-item="' + idComment + '" data-name="' + author + '" data-title="Modération du commentaire de"><span class="glyphicon glyphicon-thumbs-down" data-toggle="tooltip" title="Modérer"></span></a>';
+                if (report == 1) {
                     commentArticle += '<a class="commentUnreport text-success margLeft15"><span class="glyphicon glyphicon-thumbs-up" data-toggle="tooltip" title="Accepter"></span></a>';
                 }
             }
-            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." data-action="commentDelete" data-id-item="' + comment[i]["id"] + '" data-name="' + comment[i]["author"] + '" data-title="Supression du (et des) commentaire(s) de"><span class="glyphicon glyphicon-remove data-toggle="tooltip" title="Supprimer""></span></a>';      
+            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." data-action="commentDelete" data-id-item="' + idComment + '" data-name="' + author + '" data-title="Supression du (et des) commentaire(s) de"><span class="glyphicon glyphicon-remove data-toggle="tooltip" title="Supprimer""></span></a>';      
             commentArticle += '</div>'
         }
         commentArticle += '</div></div></div>';    
         
         return commentArticle;
         }
+
+        function htmlspecialchars(string) { return $('<span>').text(string).html() }
     }
 };
 var timerLoadComment;
@@ -169,7 +177,7 @@ $("body").on('click', ".commentUnreport", function(e){
 
 $("body").on('click', ".commentModerate", function(e){
     e.preventDefault();
-    var id = $(this).parent().parent().attr('id');
+    var id = $(this).data('id-item');
     $.post(
         '/admin/comment-moderate.html',
         { 'id': id }
@@ -177,18 +185,19 @@ $("body").on('click', ".commentModerate", function(e){
     if ($(document).attr('title') == "Tableau de bord"){
         $('#'+ id).remove();
     } else {
-        $(this).parent().parent().children('span').hide();
-        $(this).parent().parent().children('.commentUnreport').hide();
-        $(this).parent().parent().children('.commentAdd').hide();
-        $(this).parent().parent().parent().children('.commentContent').replaceWith('<p>Ce commentaire a été modéré.</p>');
-        $(this).hide();
+        $('#'+ id + ' .commentUnreport').hide();
+        $('#'+ id + ' .commentAdd').hide();
+        $('#'+ id).children('span').hide();
+        $('#'+ id).parent().children('.commentContent').replaceWith('<p>Ce commentaire a été modéré.</p>');
+        $('#'+ id + ' .moderate').hide();
     }
+    $('#dataConfirmModal').modal('toggle');
 });
 
 // Delete Comment
 $("body").on('click', ".commentDelete", function(e){
     e.preventDefault();
-    var id = $(this).attr('idItem');
+    var id = $(this).data('id-item');
     $.post(
         '/admin/comment-delete.html',
         { 'id': id }

@@ -26,14 +26,14 @@
 		</article>
 		<aside id="reportedBlock" class="col-xs-12 col-sm-5">
 			<p class="titlePost">Commentaires signalés :</p>
-			<p>Nombre total de commentaires (non modérés) : <span class="badge"><?= $numberCommentAll?></span></p>
+			<p>Nombre de commentaires non modérés : <span class="badge"><?= $numberCommentAll?></span></p>
 			<p>Nombre total de commentaires signalés : <span class="badge"><?= $numberCommentReport ?></span></p>
 			<div class="borderTop">
 				<?php foreach ($commentReported as $comment) { ?>
 				<div id="<?= $comment['id'] ?>" class="borderBot margTop15">
 					<span class="authorComment"><?= htmlspecialchars($comment['author']) ?></span>
 					<div class="iconMenu pull-right">
-						<a class="commentModerate text-danger margLeft15" data-id-item="<?= $comment['id'] ?>"><span class="glyphicon glyphicon-thumbs-down" data-toggle="tooltip" title="Modérer"></span></a>
+						<a class="moderate text-danger margLeft15" data-confirm="En modérant le commentaire, celui-ci apparaîtra sans son contenu. Validez pour confirmer." data-action="commentModerate" data-id-item="<?= $comment['id'] ?>" data-name="<?= htmlspecialchars($comment['author']) ?>" data-title="Modération du commentaire de""><span class="glyphicon glyphicon-thumbs-down" data-toggle="tooltip" title="Modérer"></span></a>
 						<a class="commentUnreport text-success margLeft15" data-id-item="<?= $comment['id'] ?>"><span class="glyphicon glyphicon-thumbs-up" data-toggle="tooltip" title="Accepter"></span></a>
 						<a href= "/post-<?= $comment['postId']?>.html#<?= $comment['id']?>" class="text-warning margLeft15"><span class="glyphicon glyphicon-share-alt" data-toggle="tooltip" title="Voir les commentaires"></span></a>
 					</div>
@@ -45,5 +45,5 @@
 		</aside>
 	</section>
 </div>
-<?= require __DIR__.'/_modalConfirm.php' ?>
+<?php require __DIR__.'/_modalConfirm.php' ?>
 

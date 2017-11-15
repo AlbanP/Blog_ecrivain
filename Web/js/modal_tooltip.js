@@ -13,7 +13,7 @@ $('body').on('click' ,'a[data-confirm]' ,function(e) {
         $('#modal-valid-href').hide();
         $('#modal-valid-action').show();
         $('#modal-valid-action').removeClass().addClass('btn btn-warning ' + action);
-        $('#modal-valid-action').attr('data-id-item', id);
+        $('#modal-valid-action').data('id-item', id);
     } else {
         $('#modal-valid-action').hide();
         $('#modal-valid-href').show();

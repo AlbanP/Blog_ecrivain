@@ -2,9 +2,9 @@
 		
 <div class="container-fluid margTop50">
 	<article id="postId" name="<?= $post['id'] ?>">
-		<h2 class="titlePost"><?= htmlspecialchars($post['title']) ?></h2>
+		<h2 class="titlePost"><?= $post['title'] ?></h2>
 		<span class="dateItem">Modifié le <?= $post['dateUpdate']->format('d/m/Y') ?></span>
-		<p class="contentPost"><?= nl2br(htmlspecialchars($post['content'])) ?></p>
+		<p class="contentPost"><?= $post['content'] ?></p>
 	</article>
 </div>	
 <div class="container-fluid margTop50">
@@ -15,15 +15,13 @@
 			</div>
 			<p class="titlePost margTop15"><i>Vos commentaires</i></p>
 		</div>
-		<div id="comments">	
-		</div>
+		<div id="comments"></div>
 	</div>
-
-	<?php require '_formComment.php' ?>
-	
 </div>
+<?php require __DIR__.'/_formComment.php' ?>
+	
 
-<?= require __DIR__.'/../../../Backend/Modules/Views/_modalConfirm.php' ?>
+<?php require __DIR__.'/../../../Backend/Modules/Views/_modalConfirm.php' ?>
 
 
 

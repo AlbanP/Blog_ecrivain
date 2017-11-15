@@ -30,6 +30,5 @@ class CommentAjaxController extends BackController {
   
   public function executeReportComment(HTTPRequest $request){
     $this->managers->getManagerOf('Comment')->report($request->postData('id'));
-    $this->app->session()->setFlash('Le commentaire a bien été signalé !');
   }
 }
