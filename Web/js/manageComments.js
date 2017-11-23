@@ -77,7 +77,7 @@ function showComment(comment){
                     commentArticle += '<a class="commentUnreport text-success margLeft15"><span class="glyphicon glyphicon-thumbs-up" data-toggle="tooltip" title="Accepter"></span></a>';
                 }
             }
-            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." data-action="commentDelete" data-id-item="' + idComment + '" data-name="' + author + '" data-title="Supression du (et des) commentaire(s) de"><span class="glyphicon glyphicon-remove data-toggle="tooltip" title="Supprimer""></span></a>';      
+            commentArticle += '<a class="text-danger margLeft15" data-confirm="Suppression du commentaire et des éventuelles commentaires liés (réponse). Validez pour confirmer." data-action="commentDelete" data-id-item="' + idComment + '" data-name="' + author + '" data-title="Supression du (et des) commentaire(s) de"><span class="glyphicon glyphicon-remove" data-toggle="tooltip" title="Supprimer"></span></a>';      
             commentArticle += '</div>'
         }
         commentArticle += '</div></div></div>';    
@@ -209,14 +209,15 @@ $("body").on('click', ".commentDelete", function(e){
 // link Comment 
 $(window).load(function(){
     var anchor = window.location.hash;
+    console.log($(anchor));
     if (anchor) {
         setTimeout (function(){
             if (anchor == '#listComment'){
                 $('html,body').animate({scrollTop: $(anchor).offset().top}, 'slow');
             } else {
-                $('html,body').animate({scrollTop: $(anchor).parent().parent().parent().offset().top}, 'slow');
+                $('html,body').animate({scrollTop: $(anchor).parent().parent().offset().top -50}, 'slow');
             }
-            }
-        , 50)
+        }
+        , 400)
     }
 });

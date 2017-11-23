@@ -10,7 +10,8 @@
   <route url="/admin/comment-unreport\.html" module="CommentAjax" action="unreport" />
   <route url="/admin/comment-delete\.html" module="CommentAjax" action="delete" />
   <route url="/admin/user-deconnexion\.html" module="User" action="deconnexion" />
-  <route url="/admin/user-manage\.html" module="User" action="ManageUser" />
+  <route url="/admin/user-manage\.html" module="User" action="manageUser" />
   <route url="/admin/user-add\.html" module="User" action="add" />
+  <route url="/admin/user-update\.html" module="User" action="update" />
   <route url="/admin/user-delete\.html" module="User" action="delete" />
 </routes>

@@ -3,21 +3,24 @@ namespace Model;
 
 use \Entity\User;
 
-class UserManagerPDO extends UserManager {
-    public function getListOf(){
+class UserManagerPDO extends UserManager
+{
+    public function getListOf()
+    {
         $q = $this->dao->prepare('SELECT id, name, email, date, role FROM user');
         $q->execute();
         $q->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Entity\User');
         $listUser = $q->fetchAll();
-        foreach ($listUser as $user){
+        foreach ($listUser as $user) {
             $user->setDate(new \DateTime($user->date()));
         }
-        $q->closeCursor();  
+        $q->closeCursor();
         
         return $listUser;
     }
     
-    public function userUnique($name) {
+    public function userUnique($name)
+    {
         $q = $this->dao->prepare('SELECT id, name, pass, email, date, role FROM user WHERE name = :name');
         $q->bindValue(':name', $name);
         $q->execute();
@@ -27,11 +30,11 @@ class UserManagerPDO extends UserManager {
       
             return $user;
         }
-      
         return null;
     }
     
-    public function userById($id) {
+    public function userById($id)
+    {
         $q = $this->dao->prepare('SELECT  id, name, email FROM user WHERE id = :id');
         $q->bindValue(':id', $id);
         $q->execute();
@@ -41,7 +44,8 @@ class UserManagerPDO extends UserManager {
         return $user;
     }
 
-    protected function add(User $user) {
+    protected function add(User $user)
+    {
         $q = $this->dao->prepare('INSERT INTO user SET name = :name, pass = :pass, email = :email, date = NOW(), role = :role');
         $q->bindValue(':name', $user->name());
         $q->bindValue(':pass', $user->pass());
@@ -50,9 +54,9 @@ class UserManagerPDO extends UserManager {
         $q->execute();
     }
     
-    protected function modify(User $user) {
-        $q = $this->dao->prepare('UPDATE user SET name = :name, pass = :pass, email = :email, role = :role WHERE id = :id');
-        $q->bindValue(':name', $user->name());
+    protected function modify(User $user)
+    {
+        $q = $this->dao->prepare('UPDATE user SET pass = :pass, email = :email, role = :role WHERE id = :id');
         $q->bindValue(':pass', $user->pass());
         $q->bindValue(':email', $user->email());
         $q->bindValue(':role', $user->role());
@@ -60,13 +64,15 @@ class UserManagerPDO extends UserManager {
         $q->execute();
     }
     
-    public function delete($id) {
+    public function delete($id)
+    {
         $this->dao->exec('DELETE FROM user WHERE id = '.(int) $id);
     }
     
-    public function userPass($id) {
+    public function userPass($id)
+    {
         $sql = 'SELECT pass FROM user WHERE id = '.(int) $id;
     
         return $this->dao->query($sql)->fetchColumn();
-    }  
+    }
 }

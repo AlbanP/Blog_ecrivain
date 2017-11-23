@@ -1,21 +1,16 @@
-/* Update User 
+// Update User 
 $('.updateUser').on('click' ,function(e) {
     e.preventDefault();
-    var user = checkUser.apply(this);
-    $('#formCheckPass').submit(function(e){
-        e.preventDefault();
-        var userData = checkPass(user);
-        if (userData != null){
-            $('#checkUser').modal('hide');
-            $('#formSaveUser .userId').val(userData.id);
-            $('#formSaveUser .name').val(userData.name);
-            $('#formSaveUser .email').val(userData.email);
-            $('#saveUser').modal('show');
-        }
-    });
-
+        var data = $(this).parent().data();
+        $('#saveUser h3').text('Modification de l\'utilisateur " ' + data.name + ' "');
+        $('#formUser').attr('action', '/admin/user-update.html');
+        $('#formUser .user_id').attr('value', data.user_id);
+        $('#formUser .name').attr('value', data.name);
+        $('#formUser .name').attr('readonly', 'readonly');
+        $('#formUser .email').attr('value', data.email);
+        $('#saveUser').modal('show');
 });
-*/
+
 /* Delete User */
 $('.deleteUser').on('click' ,function(e) {
     e.preventDefault();
@@ -36,18 +31,16 @@ function checkUser() {
     $('#message').hide();
     name = $(this).parent().data('name');
     action = $(this).data('action');
-    dataCheck = { 'id':$(this).parent().attr('id'), 'href': $(this).data('href')};
+    dataCheck = { 'id':$(this).parent().data('user_id'), 'href': $(this).data('href')};
     $('#checkUser h3').text(action + ' de "' + name + '"');
     $('#checkUser').modal('show');
     $('#pass').focus();
-    console.log('checkUser :'+name);
     return dataCheck;
 }
-
+/* Check password user Ajax */
 function checkPass(user) {
     var pass = $('#pass').val();
     var dataUser = null;
-    console.log('pass id :'+ user['id']);
     $.ajax({
         type : 'POST',
         url : user['href'],
@@ -80,4 +73,26 @@ $('.closeModal').on('click', function(e) {
 /* Tooltip */
 $('body').on('mouseover','[data-toggle="tooltip"]',function(){
     $('[data-toggle="tooltip"]').tooltip(); 
+});
+
+/* Validate save and update user */
+$(document).ready(function(){
+    $("#formUser").validate({
+        rules: {
+            name : "required",
+            passUser: "required",
+            confirmPass : {
+                required : true,
+                equalTo : "#passUser"
+            }
+        },
+        messages: {
+            name : "Champs obligatoire.",
+            passUser : "Champs obligatoire.",
+            confirmPass : {
+                required : "",
+                equalTo : "Les mots depasse ne sont pas identique."
+            }
+        }
+    });
 });

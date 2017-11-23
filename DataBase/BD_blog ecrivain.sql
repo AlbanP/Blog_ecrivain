@@ -3,7 +3,7 @@ CREATE TABLE post (
   title varchar(100) NOT NULL,  
   content text NOT NULL,
   dateUpdate datetime NOT NULL,
-  ordePosted smallint(6),
+  orderPosted smallint(6),
   PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 ;
 

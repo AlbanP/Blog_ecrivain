@@ -13,7 +13,7 @@
         <tbody>
         <?php foreach ($listPost as $post) { ?>
           <tr class="ui-state-default row">
-            <td class="col-xs-3" colspan="6"><?php static $order = 1; echo $newOrder = $order++ ; ?></td>
+            <td class="col-xs-3" colspan="6"><?php static $order = 1; echo $newOrder = $order++ ?></td>
             <td class="col-xs-9" colspan="6"><?= $post['title'] ?></td>
             <input type="hidden" name="" value="<?= $post['id'] ?>"> 
           </tr>
@@ -22,7 +22,7 @@
     </table>
     <div class="margTop15">
       <input type="submit"  name="newListOrder"  value="Enregistrer l'ordre de publication" class="btn btn-primary">
-      <?php if ($session->hasFlash()) echo '<span> ', $session->getFlash(), '</span>'; ?>
+      <?php if ($session->hasFlash()) echo '<span id="message"> ', $session->getFlash(), '</span>';  ?>
     </div>
   </form>
 </div>

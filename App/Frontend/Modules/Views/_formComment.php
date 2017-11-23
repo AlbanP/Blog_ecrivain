@@ -2,9 +2,9 @@
 	<form action="" method="post" class="col-xs-10 col-xs-push-1 form-horizontal margTop15 margBot15 borderAll" >
 		<legend class="textAnnotation">Saisiez votre pseudo et message (*obligatoire)</legend>
 		<div class="row">
-	    	<label for="commentAuthor" class="control-label col-xs-2">Pseudo*</label>
+	    	<label for="commentAuthor" class="control-label col-xs-2">Pseudo* (15 caractères maximum)</label>
 	    	<div class="col-xs-10">
-	    		<input id="commentAuthor" class="form-control" type="text" name="commentAuthor" value="<?= isset($_SESSION['name'])? $_SESSION['name'] :'' ?>" required />
+	    		<input id="commentAuthor" class="form-control" type="text" name="commentAuthor" maxlength="15" value="<?= isset($_SESSION['name'])? $_SESSION['name'] :'' ?>" required />
 	    	</div>
 	    </div>
 	    <div class="row margTop5">	

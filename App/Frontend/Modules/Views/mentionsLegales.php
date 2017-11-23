@@ -1,4 +1,4 @@
-<?php include '_navMenu.php' ?> 
+<?php require '_navMenu.php' ?> 
 
 <section class="container-fluid margTop50">
 	<div class="col-xs-10 col-xs-push-1 margBot15">	

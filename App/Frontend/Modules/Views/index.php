@@ -2,7 +2,12 @@
 	<h1 class="col-xs-12 col-sm-7 pull-right" >Décrouvrez mon nouveau roman</h1>	
 	<img class="col-xs-12 col-sm-5 margTop15" src="/img/logo.jpg" alt="Billet simple pour l'Alaska de Jean Forteroche">
 	<p id="nameAuthor" class="visible-xs">Jean Forteroche</p>
-	<p class="col-xs-12 col-sm-7">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam porttitor suscipit nisl, a ultrices risus faucibus eget. Integer nec magna quis justo viverra luctus ac non quam. Maecenas libero lorem, venenatis cursus efficitur vel, maximus ac sapien. Sed tortor diam, sodales eu eros eu, pretium imperdiet augue. Quisque tempus lacus enim, eget consequat quam mattis eget. Cras a tortor vitae diam egestas consequat ut aliquet sem. Quisque risus lorem, mattis eget tincidunt sed, sagittis vitae lectus. Sed nec fringilla metus, quis semper felis. Integer massa arcu, sollicitudin at neque ac, varius scelerisque tellus. Vestibulum suscipit nulla vel maximus volutpat. Ut sapien nulla, egestas id purus sed, rhoncus sollicitudin leo. Quisque pharetra turpis ut enim feugiat, at feugiat velit dictum.</p>
+	<div class="col-xs-12 col-sm-7">
+		<p>Jean Forteroche, acteur et écrivain, publie par épisode son prochain roman « Billet simple pour l'Alaska ».</p>
+		<p>Jean Forteroche se qualifie d'écrivain du terroir décrivant les hommes de la campagne bourguignonne de Forterre et de Puisaye prit entre la désertification et la modernité générant des peurs et des fantasmes. Comme Henri Vincenot, son « maître » comme il le qualifie, il recherche à dépeindre cette société à l'écart des villes mais qui la regarde...</p>
+		<p>Ce roman à pour thème la création d'un élevage de Malamute de l'Alaska dans cette campagne auxerroise. Le malamute de l'Alaska tire son nom des Mahlemiuts en inuite : « les hommes habitant l’endroit où il y a de grandes vagues »...</p>
+		<p>Suivez moi dans l'élaboratoin de mon roman au travers des chapitres ci-dessous et laisser des commentaires.</p>
+	</div>
 	<div id="author" class="hidden-xs col-sm-7 pull-right">
 		<p id="nameAuthor">Jean Forteroche</p>
 		<img id="photoAuthor" src="/img/photoAuthor.jpg" alt="Photo de Jean Forteroche">
@@ -15,11 +20,8 @@
 			<?php include '_menuPosts.php' ?> 
 		</div>
 		
-		<?php if(isset($_SESSION['auth'])){ 
-			include __DIR__.'/../../../Backend/Modules/Views/_menuUser.php' 
-		;}?>
-
-	</div>
+		<?php if (isset($_SESSION['auth'])) { require __DIR__.'/../../../Backend/Modules/Views/_menuUser.php';}?>
+		</div>
 </nav>
 <div class="container-fluid">
 	<section class="row">		

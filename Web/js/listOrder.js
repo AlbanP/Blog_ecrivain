@@ -4,6 +4,7 @@ $( "table tbody" ).sortable( {
 			var prefix = 'Order';
 			$(this).find('td').first().html(index + 1);
 			$(this).find('input').attr('name', prefix + (index + 1));
+			$("#message").text(' ');
     	});
   	}
 });
