@@ -5,6 +5,7 @@
             <?= isset($title) ? $title : 'Blog de Jean Forteroche' ?>
         </title>  
         <meta charset="utf-8" />
+        <link rel="icon" href="/img/favicon.ico" />
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
         <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
